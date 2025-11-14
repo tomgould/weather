@@ -806,3 +806,45 @@ function getLocalTime(timezoneOffset) {
     });
 }
 
+// Touch/Swipe support for carousel
+let touchStartX = 0;
+let touchEndX = 0;
+let touchStartY = 0;
+let touchEndY = 0;
+
+function handleSwipe() {
+    const swipeThreshold = 50; // Minimum distance for a swipe
+    const swipeDistanceX = touchEndX - touchStartX;
+    const swipeDistanceY = Math.abs(touchEndY - touchStartY);
+
+    // Only trigger if horizontal swipe is greater than vertical (to avoid interfering with scrolling)
+    if (Math.abs(swipeDistanceX) > swipeThreshold && Math.abs(swipeDistanceX) > swipeDistanceY) {
+        const currentIndex = Math.round(Math.abs(currentOffset) / getCardWidth());
+
+        if (swipeDistanceX < 0) {
+            // Swipe left - go to next card
+            const nextIndex = Math.min(currentIndex + 1, weatherData.length - 1);
+            scrollToCard(nextIndex);
+        } else {
+            // Swipe right - go to previous card
+            const prevIndex = Math.max(currentIndex - 1, 0);
+            scrollToCard(prevIndex);
+        }
+    }
+}
+
+// Add touch event listeners to carousel
+const carousel = document.getElementById('weatherCarousel');
+
+carousel.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].screenX;
+    touchStartY = e.changedTouches[0].screenY;
+}, { passive: true });
+
+carousel.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].screenX;
+    touchEndY = e.changedTouches[0].screenY;
+    handleSwipe();
+}, { passive: true });
+
+
