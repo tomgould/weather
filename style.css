@@ -259,13 +259,21 @@ h1 {
     font-size: 2rem;
     font-weight: 900;
     line-height: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    justify-content: center;
+}
+
+.score-number {
     background: var(--card-border-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
+}
+
+.score-emoji {
+    font-size: 1.75rem;
 }
 
 .score-label {
@@ -355,10 +363,18 @@ h1 {
     font-weight: 500;
 }
 
-.weed-indicator {
+.lifestyle-indicators {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.lifestyle-indicator {
     padding: 0.75rem 1rem;
     border-radius: 12px;
-    margin-bottom: 1.5rem;
     display: flex;
     align-items: center;
     gap: 0.75rem;
@@ -366,11 +382,9 @@ h1 {
     font-weight: 600;
     font-size: 0.95rem;
     box-shadow: var(--shadow-md);
-    position: relative;
-    z-index: 1;
 }
 
-.weed-icon {
+.lifestyle-icon {
     font-size: 1.5rem;
     filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
 }
@@ -858,12 +872,16 @@ h1 {
         font-size: 1.75rem;
     }
 
-    .weed-indicator {
+    .score-emoji {
+        font-size: 1.5rem;
+    }
+
+    .lifestyle-indicator {
         font-size: 0.85rem;
         padding: 0.6rem 0.8rem;
     }
 
-    .weed-icon {
+    .lifestyle-icon {
         font-size: 1.25rem;
     }
 

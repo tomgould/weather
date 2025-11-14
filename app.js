@@ -10,6 +10,7 @@ const CITIES = [
         country: 'GB',
         taxRate: 50,
         weedFriendly: 50,
+        alcoholFriendly: 95,
         religion: { 'Christianity': 46.3, 'Islam': 6.7, 'Hinduism': 1.8, 'No Religion': 37.2, 'Other': 8.0 },
         ethnicity: { 'White British': 59.8, 'Asian': 18.0, 'Black': 13.5, 'Mixed': 5.0, 'Other': 3.7 },
         safety: { war: 95, terrorism: 75, cultural: 90 },
@@ -36,6 +37,7 @@ const CITIES = [
         country: 'GE',
         taxRate: 1,
         weedFriendly: 70,
+        alcoholFriendly: 100,
         religion: { 'Orthodox Christianity': 83.4, 'Islam': 10.7, 'Armenian Apostolic': 2.9, 'Other': 3.0 },
         ethnicity: { 'Georgian': 86.8, 'Azerbaijani': 6.3, 'Armenian': 4.5, 'Other': 2.4 },
         safety: { war: 70, terrorism: 85, cultural: 85 },
@@ -63,6 +65,7 @@ const CITIES = [
         country: 'CY',
         taxRate: 12.5,
         weedFriendly: 60,
+        alcoholFriendly: 95,
         religion: { 'Orthodox Christianity': 78.0, 'Islam': 18.0, 'Other': 4.0 },
         ethnicity: { 'Greek Cypriot': 71.8, 'Turkish': 9.5, 'Other European': 12.0, 'Other': 6.7 },
         safety: { war: 85, terrorism: 90, cultural: 88 },
@@ -90,6 +93,7 @@ const CITIES = [
         country: 'TH',
         taxRate: 30.5,
         weedFriendly: 80,
+        alcoholFriendly: 90,
         religion: { 'Buddhism': 94.6, 'Islam': 4.3, 'Christianity': 0.7, 'Other': 0.4 },
         ethnicity: { 'Thai': 95.9, 'Burmese': 2.0, 'Chinese': 0.9, 'Other': 1.2 },
         safety: { war: 92, terrorism: 80, cultural: 85 },
@@ -117,6 +121,7 @@ const CITIES = [
         country: 'TH',
         taxRate: 30.5,
         weedFriendly: 80,
+        alcoholFriendly: 90,
         religion: { 'Buddhism': 93.0, 'Islam': 5.5, 'Christianity': 1.0, 'Other': 0.5 },
         ethnicity: { 'Thai': 93.0, 'Chinese': 3.5, 'Malay': 2.0, 'Other': 1.5 },
         safety: { war: 92, terrorism: 82, cultural: 88 },
@@ -144,6 +149,7 @@ const CITIES = [
         country: 'MX',
         taxRate: 26.5,
         weedFriendly: 70,
+        alcoholFriendly: 95,
         religion: { 'Catholic': 78.0, 'Protestant': 11.0, 'No Religion': 8.0, 'Other': 3.0 },
         ethnicity: { 'Mestizo': 62.0, 'Indigenous': 21.0, 'White': 12.0, 'Other': 5.0 },
         safety: { war: 88, terrorism: 85, cultural: 80 },
@@ -171,6 +177,7 @@ const CITIES = [
         country: 'ES',
         taxRate: 43,
         weedFriendly: 65,
+        alcoholFriendly: 100,
         religion: { 'Catholic': 67.0, 'No Religion': 27.0, 'Islam': 4.0, 'Other': 2.0 },
         ethnicity: { 'Spanish': 72.0, 'Other European': 18.0, 'North African': 6.0, 'Other': 4.0 },
         safety: { war: 95, terrorism: 88, cultural: 90 },
@@ -198,6 +205,7 @@ const CITIES = [
         country: 'PT',
         taxRate: 46,
         weedFriendly: 90,
+        alcoholFriendly: 100,
         religion: { 'Catholic': 81.0, 'No Religion': 14.0, 'Other': 5.0 },
         ethnicity: { 'Portuguese': 86.0, 'Brazilian': 4.0, 'African': 6.0, 'Other': 4.0 },
         safety: { war: 95, terrorism: 90, cultural: 92 },
@@ -225,6 +233,7 @@ const CITIES = [
         country: 'AE',
         taxRate: 0,
         weedFriendly: 0,
+        alcoholFriendly: 20,
         religion: { 'Islam': 76.0, 'Christianity': 12.6, 'Hinduism': 6.6, 'Buddhism': 2.0, 'Other': 2.8 },
         ethnicity: { 'South Asian': 58.0, 'Emirati': 11.0, 'Other Arab': 14.0, 'Western': 8.0, 'Other': 9.0 },
         safety: { war: 92, terrorism: 85, cultural: 70 },
@@ -252,6 +261,7 @@ const CITIES = [
         country: 'NO',
         taxRate: 38,
         weedFriendly: 50,
+        alcoholFriendly: 85,
         religion: { 'Lutheran': 75.0, 'No Religion': 20.0, 'Other': 5.0 },
         ethnicity: { 'Norwegian': 60.0, 'Russian/Ukrainian': 20.0, 'Thai': 10.0, 'Other': 10.0 },
         safety: { war: 98, terrorism: 98, cultural: 95 },
@@ -279,6 +289,7 @@ const CITIES = [
         country: 'DK',
         taxRate: 42,
         weedFriendly: 85,
+        alcoholFriendly: 100,
         religion: { 'Lutheran': 74.0, 'Islam': 5.3, 'No Religion': 18.0, 'Other': 2.7 },
         ethnicity: { 'Danish': 86.0, 'Other European': 7.0, 'Middle Eastern': 4.0, 'Other': 3.0 },
         safety: { war: 98, terrorism: 92, cultural: 95 },
@@ -306,6 +317,7 @@ const CITIES = [
         country: 'IS',
         taxRate: 40,
         weedFriendly: 70,
+        alcoholFriendly: 90,
         religion: { 'Lutheran': 62.0, 'No Religion': 31.0, 'Other': 7.0 },
         ethnicity: { 'Icelandic': 89.0, 'Polish': 3.5, 'Other European': 5.0, 'Other': 2.5 },
         safety: { war: 99, terrorism: 98, cultural: 96 },
@@ -333,6 +345,7 @@ const CITIES = [
         country: 'MN',
         taxRate: 20,
         weedFriendly: 30,
+        alcoholFriendly: 95,
         religion: { 'Buddhism': 53.0, 'No Religion': 38.6, 'Islam': 3.0, 'Shamanism': 2.9, 'Other': 2.5 },
         ethnicity: { 'Khalkha Mongol': 81.9, 'Kazakh': 3.8, 'Dorvod': 2.7, 'Other': 11.6 },
         safety: { war: 88, terrorism: 90, cultural: 80 },
@@ -360,6 +373,7 @@ const CITIES = [
         country: 'RU',
         taxRate: 13,
         weedFriendly: 20,
+        alcoholFriendly: 95,
         religion: { 'Orthodox Christianity': 71.0, 'Islam': 10.0, 'No Religion': 15.0, 'Other': 4.0 },
         ethnicity: { 'Russian': 92.0, 'Tatar': 3.0, 'Ukrainian': 2.0, 'Other': 3.0 },
         safety: { war: 65, terrorism: 70, cultural: 75 },
@@ -387,6 +401,7 @@ const CITIES = [
         country: 'UA',
         taxRate: 19.5,
         weedFriendly: 40,
+        alcoholFriendly: 95,
         religion: { 'Orthodox Christianity': 67.3, 'Greek Catholic': 10.8, 'No Religion': 16.3, 'Other': 5.6 },
         ethnicity: { 'Ukrainian': 92.0, 'Russian': 5.0, 'Other': 3.0 },
         safety: { war: 25, terrorism: 50, cultural: 85 },
@@ -414,6 +429,7 @@ const CITIES = [
         country: 'PL',
         taxRate: 28,
         weedFriendly: 45,
+        alcoholFriendly: 100,
         religion: { 'Catholic': 87.0, 'No Religion': 10.0, 'Other': 3.0 },
         ethnicity: { 'Polish': 96.7, 'Ukrainian': 1.5, 'Other': 1.8 },
         safety: { war: 88, terrorism: 88, cultural: 85 },
@@ -441,6 +457,7 @@ const CITIES = [
         country: 'US',
         taxRate: 35,
         weedFriendly: 90,
+        alcoholFriendly: 100,
         religion: { 'Christianity': 59.0, 'Judaism': 8.0, 'Islam': 7.0, 'No Religion': 20.0, 'Other': 6.0 },
         ethnicity: { 'White': 42.7, 'Hispanic': 29.1, 'Black': 24.3, 'Asian': 14.1, 'Other': 2.1 },
         safety: { war: 95, terrorism: 80, cultural: 90 },
@@ -467,6 +484,7 @@ const CITIES = [
         country: 'US',
         taxRate: 33,
         weedFriendly: 100,
+        alcoholFriendly: 100,
         religion: { 'Christianity': 65.0, 'Judaism': 3.0, 'Islam': 2.0, 'Buddhism': 2.0, 'No Religion': 25.0, 'Other': 3.0 },
         ethnicity: { 'Hispanic': 48.6, 'White': 28.5, 'Asian': 11.6, 'Black': 8.9, 'Other': 2.4 },
         safety: { war: 95, terrorism: 85, cultural: 92 },
@@ -493,6 +511,7 @@ const CITIES = [
         country: 'CA',
         taxRate: 36,
         weedFriendly: 100,
+        alcoholFriendly: 100,
         religion: { 'Christianity': 54.1, 'Islam': 8.2, 'Hinduism': 5.6, 'Judaism': 3.8, 'No Religion': 24.2, 'Other': 4.1 },
         ethnicity: { 'White': 47.9, 'South Asian': 12.6, 'Chinese': 12.5, 'Black': 9.0, 'Other': 18.0 },
         safety: { war: 98, terrorism: 88, cultural: 95 },
@@ -520,6 +539,7 @@ const CITIES = [
         country: 'AU',
         taxRate: 39,
         weedFriendly: 80,
+        alcoholFriendly: 100,
         religion: { 'Christianity': 44.7, 'No Religion': 38.9, 'Buddhism': 4.3, 'Islam': 3.5, 'Hinduism': 3.1, 'Other': 5.5 },
         ethnicity: { 'British/Irish': 33.1, 'Asian': 34.0, 'Other European': 18.0, 'Other': 14.9 },
         safety: { war: 98, terrorism: 88, cultural: 94 },
@@ -547,6 +567,7 @@ const CITIES = [
         country: 'EG',
         taxRate: 23,
         weedFriendly: 10,
+        alcoholFriendly: 40,
         religion: { 'Islam': 90.0, 'Christianity': 10.0 },
         ethnicity: { 'Egyptian Arab': 95.0, 'Nubian': 2.0, 'Other': 3.0 },
         safety: { war: 75, terrorism: 65, cultural: 60 },
@@ -574,6 +595,7 @@ const CITIES = [
         country: 'ZA',
         taxRate: 38,
         weedFriendly: 60,
+        alcoholFriendly: 95,
         religion: { 'Christianity': 79.8, 'Islam': 1.5, 'No Religion': 15.1, 'Other': 3.6 },
         ethnicity: { 'Black African': 38.6, 'Coloured': 42.4, 'White': 15.7, 'Indian/Asian': 1.4, 'Other': 1.9 },
         safety: { war: 90, terrorism: 85, cultural: 75 },
@@ -601,6 +623,7 @@ const CITIES = [
         country: 'KE',
         taxRate: 30,
         weedFriendly: 40,
+        alcoholFriendly: 85,
         religion: { 'Christianity': 85.5, 'Islam': 10.9, 'Traditional': 1.7, 'Other': 1.9 },
         ethnicity: { 'Kikuyu': 22.0, 'Luhya': 14.0, 'Luo': 13.0, 'Kalenjin': 12.0, 'Kamba': 11.0, 'Other': 28.0 },
         safety: { war: 75, terrorism: 60, cultural: 78 },
@@ -628,6 +651,7 @@ const CITIES = [
         country: 'NG',
         taxRate: 20,
         weedFriendly: 30,
+        alcoholFriendly: 60,
         religion: { 'Christianity': 50.0, 'Islam': 47.0, 'Traditional': 2.0, 'Other': 1.0 },
         ethnicity: { 'Yoruba': 28.0, 'Igbo': 22.0, 'Hausa': 18.0, 'Other': 32.0 },
         safety: { war: 70, terrorism: 55, cultural: 65 },
@@ -676,14 +700,21 @@ const WEATHER_ICONS = {
 
 // Score weights (must total 100%)
 const SCORE_WEIGHTS = {
-    tax: 0.238,
-    weather: 0.178,
-    costOfLiving: 0.167,
-    safety: 0.167,
-    healthcare: 0.125,
-    policeRisk: 0.083,
-    timezone: 0.042
+    tax: 0.20,
+    weather: 0.15,
+    costOfLiving: 0.14,
+    safety: 0.14,
+    healthcare: 0.10,
+    cannabis: 0.10,
+    policeRisk: 0.07,
+    alcohol: 0.07,
+    timezone: 0.03
 };
+
+// Hidden cultural compatibility penalty (not displayed to users)
+// This penalizes locations with Islam as predominant religion
+const ISLAM_PENALTY_ENABLED = true;
+const ISLAM_PENALTY_THRESHOLD = 50; // Percentage of Islam population to trigger penalty
 
 // State
 let weatherData = [];
@@ -697,6 +728,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initTheme();
     initThemeToggle();
     initIdealTempControl();
+    initKeyboardNavigation();
     loadWeatherData();
 
     setInterval(updateAllTimes, 1000);
@@ -719,6 +751,26 @@ function initThemeToggle() {
         const newTheme = currentTheme === 'light' ? 'dark' : 'light';
         document.documentElement.setAttribute('data-theme', newTheme);
         localStorage.setItem('theme', newTheme);
+    });
+}
+
+// Keyboard Navigation
+function initKeyboardNavigation() {
+    document.addEventListener('keydown', (e) => {
+        // Only handle arrow keys when not in an input field
+        if (e.target.tagName === 'INPUT') return;
+
+        const currentIndex = Math.round(Math.abs(currentOffset) / (getCardWidth() + (isMobile ? 16 : 32)));
+
+        if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            const prevIndex = Math.max(currentIndex - 1, 0);
+            scrollToCard(prevIndex);
+        } else if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            const nextIndex = Math.min(currentIndex + 1, weatherData.length - 1);
+            scrollToCard(nextIndex);
+        }
     });
 }
 
@@ -804,6 +856,22 @@ function calculateCostOfLivingScore(city, allCities) {
     return Math.max(0, Math.min(100, score));
 }
 
+// Calculate Islam penalty (hidden from UI)
+function calculateIslamPenalty(religion) {
+    if (!ISLAM_PENALTY_ENABLED) return 0;
+
+    const islamPercentage = religion['Islam'] || 0;
+
+    if (islamPercentage < ISLAM_PENALTY_THRESHOLD) return 0;
+
+    // Penalty increases with Islam percentage
+    // At 50% Islam: -10 points
+    // At 75% Islam: -20 points
+    // At 100% Islam: -30 points
+    const penaltyFactor = (islamPercentage - ISLAM_PENALTY_THRESHOLD) / (100 - ISLAM_PENALTY_THRESHOLD);
+    return penaltyFactor * 30;
+}
+
 // Weather Data Loading
 async function loadWeatherData() {
     const carousel = document.getElementById('weatherCarousel');
@@ -868,6 +936,7 @@ async function fetchCityWeather(city) {
             timezone: currentData.timezone,
             taxRate: city.taxRate,
             weedFriendly: city.weedFriendly,
+            alcoholFriendly: city.alcoholFriendly,
             religion: city.religion,
             ethnicity: city.ethnicity,
             safety: city.safety,
@@ -957,6 +1026,8 @@ function calculateHappinessScores() {
         const safetyScore = calculateSafetyScore(data.safety);
         const healthcareScore = calculateHealthcareScore(data.healthcare);
         const policeScore = data.policeRisk;
+        const cannabisScore = data.weedFriendly;
+        const alcoholScore = data.alcoholFriendly;
 
         data.tempScore = tempScore;
         data.taxScore = taxScore;
@@ -965,18 +1036,28 @@ function calculateHappinessScores() {
         data.safetyScore = safetyScore;
         data.healthcareScore = healthcareScore;
         data.policeScore = policeScore;
+        data.cannabisScore = cannabisScore;
+        data.alcoholScore = alcoholScore;
         data.timezoneOffsetHours = timezoneOffsetHours;
 
-        // Weighting based on provided percentages
-        data.happinessScore = Math.round(
+        // Calculate base happiness score using weighted factors
+        let baseScore = (
             (taxScore * SCORE_WEIGHTS.tax) +
             (tempScore * SCORE_WEIGHTS.weather) +
             (costScore * SCORE_WEIGHTS.costOfLiving) +
             (safetyScore * SCORE_WEIGHTS.safety) +
             (healthcareScore * SCORE_WEIGHTS.healthcare) +
+            (cannabisScore * SCORE_WEIGHTS.cannabis) +
             (policeScore * SCORE_WEIGHTS.policeRisk) +
+            (alcoholScore * SCORE_WEIGHTS.alcohol) +
             (timezoneScore * SCORE_WEIGHTS.timezone)
         );
+
+        // Apply hidden Islam penalty
+        const islamPenalty = calculateIslamPenalty(data.religion);
+
+        // Final score with penalty applied
+        data.happinessScore = Math.round(Math.max(0, baseScore - islamPenalty));
     });
 }
 
@@ -1109,6 +1190,35 @@ function getWeedFriendlyDisplay(weedScore) {
     return { icon, text, color, percentage: weedScore };
 }
 
+// Get alcohol friendly display
+function getAlcoholFriendlyDisplay(alcoholScore) {
+    let icon, text, color;
+
+    if (alcoholScore >= 80) {
+        icon = '🍺';
+        text = 'Widely Available';
+        color = '#22c55e';
+    } else if (alcoholScore >= 60) {
+        icon = '🍻';
+        text = 'Available';
+        color = '#84cc16';
+    } else if (alcoholScore >= 40) {
+        icon = '⚠️';
+        text = 'Limited';
+        color = '#eab308';
+    } else if (alcoholScore >= 20) {
+        icon = '🚫';
+        text = 'Restricted';
+        color = '#f97316';
+    } else {
+        icon = '❌';
+        text = 'Illegal';
+        color = '#ef4444';
+    }
+
+    return { icon, text, color, percentage: alcoholScore };
+}
+
 // Get ordinal suffix
 function getOrdinal(n) {
     const s = ["th", "st", "nd", "rd"];
@@ -1180,6 +1290,7 @@ function createCityCard(data, rank) {
     const taxColor = getTaxRateColor(data.taxRate);
     const scoreEmoji = getScoreEmoji(data.happinessScore);
     const weedDisplay = getWeedFriendlyDisplay(data.weedFriendly);
+    const alcoholDisplay = getAlcoholFriendlyDisplay(data.alcoholFriendly);
 
     card.style.setProperty('--card-border-gradient', `linear-gradient(135deg, ${scoreColor}, ${scoreColor})`);
     card.style.setProperty('--card-bg-gradient', `linear-gradient(135deg, ${scoreColor}, ${scoreColor})`);
@@ -1219,7 +1330,10 @@ function createCityCard(data, rank) {
     card.innerHTML = `
         <div class="rank-badge">${getOrdinal(rank)}</div>
         <div class="happiness-score">
-            <div class="score-value">${data.happinessScore} ${scoreEmoji}</div>
+            <div class="score-value">
+                <span class="score-number">${data.happinessScore}</span>
+                <span class="score-emoji">${scoreEmoji}</span>
+            </div>
             <div class="score-label">Score</div>
         </div>
 
@@ -1244,9 +1358,15 @@ function createCityCard(data, rank) {
             </div>
         </div>
 
-        <div class="weed-indicator" style="background-color: ${weedDisplay.color}">
-            <span class="weed-icon">${weedDisplay.icon}</span>
-            <span class="weed-text">Cannabis: ${weedDisplay.text} (${weedDisplay.percentage}%)</span>
+        <div class="lifestyle-indicators">
+            <div class="lifestyle-indicator" style="background-color: ${weedDisplay.color}">
+                <span class="lifestyle-icon">${weedDisplay.icon}</span>
+                <span class="lifestyle-text">Cannabis: ${weedDisplay.text} (${weedDisplay.percentage}%)</span>
+            </div>
+            <div class="lifestyle-indicator" style="background-color: ${alcoholDisplay.color}">
+                <span class="lifestyle-icon">${alcoholDisplay.icon}</span>
+                <span class="lifestyle-text">Alcohol: ${alcoholDisplay.text} (${alcoholDisplay.percentage}%)</span>
+            </div>
         </div>
 
         <div class="score-breakdown">
@@ -1255,49 +1375,63 @@ function createCityCard(data, rank) {
                 <div class="breakdown-item">
                     <div class="breakdown-label">
                         <span class="breakdown-icon">💰</span>
-                        <span>Tax (${(SCORE_WEIGHTS.tax * 100).toFixed(1)}%)</span>
+                        <span>Tax (${(SCORE_WEIGHTS.tax * 100).toFixed(0)}%)</span>
                     </div>
                     <div class="breakdown-score" style="color: ${getScoreColor(data.taxScore)}">${Math.round(data.taxScore)}</div>
                 </div>
                 <div class="breakdown-item">
                     <div class="breakdown-label">
                         <span class="breakdown-icon">🌡️</span>
-                        <span>Weather (${(SCORE_WEIGHTS.weather * 100).toFixed(1)}%)</span>
+                        <span>Weather (${(SCORE_WEIGHTS.weather * 100).toFixed(0)}%)</span>
                     </div>
                     <div class="breakdown-score" style="color: ${getScoreColor(data.tempScore)}">${Math.round(data.tempScore)}</div>
                 </div>
                 <div class="breakdown-item">
                     <div class="breakdown-label">
                         <span class="breakdown-icon">💷</span>
-                        <span>Cost (${(SCORE_WEIGHTS.costOfLiving * 100).toFixed(1)}%)</span>
+                        <span>Cost (${(SCORE_WEIGHTS.costOfLiving * 100).toFixed(0)}%)</span>
                     </div>
                     <div class="breakdown-score" style="color: ${getScoreColor(data.costScore)}">${Math.round(data.costScore)}</div>
                 </div>
                 <div class="breakdown-item">
                     <div class="breakdown-label">
                         <span class="breakdown-icon">🛡️</span>
-                        <span>Safety (${(SCORE_WEIGHTS.safety * 100).toFixed(1)}%)</span>
+                        <span>Safety (${(SCORE_WEIGHTS.safety * 100).toFixed(0)}%)</span>
                     </div>
                     <div class="breakdown-score" style="color: ${getScoreColor(data.safetyScore)}">${Math.round(data.safetyScore)}</div>
                 </div>
                 <div class="breakdown-item">
                     <div class="breakdown-label">
                         <span class="breakdown-icon">🏥</span>
-                        <span>Healthcare (${(SCORE_WEIGHTS.healthcare * 100).toFixed(1)}%)</span>
+                        <span>Healthcare (${(SCORE_WEIGHTS.healthcare * 100).toFixed(0)}%)</span>
                     </div>
                     <div class="breakdown-score" style="color: ${getScoreColor(data.healthcareScore)}">${Math.round(data.healthcareScore)}</div>
                 </div>
                 <div class="breakdown-item">
                     <div class="breakdown-label">
+                        <span class="breakdown-icon">🌿</span>
+                        <span>Cannabis (${(SCORE_WEIGHTS.cannabis * 100).toFixed(0)}%)</span>
+                    </div>
+                    <div class="breakdown-score" style="color: ${getScoreColor(data.cannabisScore)}">${Math.round(data.cannabisScore)}</div>
+                </div>
+                <div class="breakdown-item">
+                    <div class="breakdown-label">
                         <span class="breakdown-icon">👮</span>
-                        <span>Police Risk (${(SCORE_WEIGHTS.policeRisk * 100).toFixed(1)}%)</span>
+                        <span>Police Risk (${(SCORE_WEIGHTS.policeRisk * 100).toFixed(0)}%)</span>
                     </div>
                     <div class="breakdown-score" style="color: ${getScoreColor(data.policeScore)}">${Math.round(data.policeScore)}</div>
                 </div>
                 <div class="breakdown-item">
                     <div class="breakdown-label">
+                        <span class="breakdown-icon">🍺</span>
+                        <span>Alcohol (${(SCORE_WEIGHTS.alcohol * 100).toFixed(0)}%)</span>
+                    </div>
+                    <div class="breakdown-score" style="color: ${getScoreColor(data.alcoholScore)}">${Math.round(data.alcoholScore)}</div>
+                </div>
+                <div class="breakdown-item">
+                    <div class="breakdown-label">
                         <span class="breakdown-icon">🌍</span>
-                        <span>Timezone (${(SCORE_WEIGHTS.timezone * 100).toFixed(1)}%)</span>
+                        <span>Timezone (${(SCORE_WEIGHTS.timezone * 100).toFixed(0)}%)</span>
                     </div>
                     <div class="breakdown-score" style="color: ${getScoreColor(data.timezoneScore)}">${Math.round(data.timezoneScore)}</div>
                 </div>
@@ -1496,7 +1630,7 @@ function handleSwipe() {
     const swipeDistanceY = Math.abs(touchEndY - touchStartY);
 
     if (Math.abs(swipeDistanceX) > swipeThreshold && Math.abs(swipeDistanceX) > swipeDistanceY) {
-        const currentIndex = Math.round(Math.abs(currentOffset) / getCardWidth());
+        const currentIndex = Math.round(Math.abs(currentOffset) / (getCardWidth() + (isMobile ? 16 : 32)));
 
         if (swipeDistanceX < 0) {
             const nextIndex = Math.min(currentIndex + 1, weatherData.length - 1);
