@@ -175,7 +175,7 @@ function createCityCard(data, rank) {
                     <span class="score-number">${data.happinessScore}</span>
                     <span class="score-emoji">${scoreEmoji}</span>
                 </div>
-                <div class="score-label">Score</div>
+                <div class="score-label">Score: ${data.happinessScore}</div>
             </div>
 
             <div class="city-header">
@@ -195,6 +195,37 @@ function createCityCard(data, rank) {
                     <div class="tax-info">
                         <div class="tax-rate">${data.taxRate}%</div>
                         <div class="tax-label">Tax Rate</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="weather-summary">
+                <div class="weather-icon">${WEATHER_ICONS[data.current.icon] || '🌡️'}</div>
+                <div class="weather-info">
+                    <div class="weather-description">${data.current.description}</div>
+                    <div class="weather-temps">
+                        <div class="temp-item">
+                            <span class="temp-label">💧 Current</span>
+                            <span class="temp-value">${data.current.temp}°C</span>
+                        </div>
+                        <div class="temp-item">
+                            <span class="temp-label">📊 Avg (Scored)</span>
+                            <span class="temp-value" style="color: ${getScoreColor(data.tempScore)}">${data.avgTemp}°C</span>
+                        </div>
+                    </div>
+                    <div class="weather-details">
+                        <div class="weather-detail">
+                            <span>💧</span>
+                            <span>${data.current.humidity}%</span>
+                        </div>
+                        <div class="weather-detail">
+                            <span>💨</span>
+                            <span>${data.current.windSpeed} m/s</span>
+                        </div>
+                        <div class="weather-detail">
+                            <span>🌡️</span>
+                            <span>Feels ${data.current.feelsLike}°</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -337,28 +368,6 @@ function createCityCard(data, rank) {
                 <h3 class="demographics-title">👥 Ethnicity</h3>
                 <div class="bar-chart">
                     ${createBarChart(data.ethnicity)}
-                </div>
-            </div>
-
-            <div class="current-weather">
-                <div class="weather-icon">${WEATHER_ICONS[data.current.icon] || '🌡️'}</div>
-                <div class="current-temp">
-                    <div class="temp-display">${data.current.temp}°C</div>
-                    <div class="weather-description">${data.current.description}</div>
-                    <div class="weather-details">
-                        <div class="weather-detail">
-                            <span>💧</span>
-                            <span>${data.current.humidity}%</span>
-                        </div>
-                        <div class="weather-detail">
-                            <span>💨</span>
-                            <span>${data.current.windSpeed} m/s</span>
-                        </div>
-                        <div class="weather-detail">
-                            <span>🌡️</span>
-                            <span>Feels ${data.current.feelsLike}°</span>
-                        </div>
-                    </div>
                 </div>
             </div>
 

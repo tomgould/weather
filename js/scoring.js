@@ -122,7 +122,35 @@ function adjustSafetyForDemographics(city, profile) {
     return adjusted;
 }
 
-// Calculate temperature score
+// Calculate average temperature from forecast and score it
+function calculateForecastTemperatureScore(forecast, idealTemp) {
+    if (!forecast || forecast.length === 0) {
+        return { score: 50, avgTemp: idealTemp }; // Fallback
+    }
+
+    // Collect all min and max temps from forecast
+    const allTemps = [];
+    const allScores = [];
+
+    forecast.forEach(day => {
+        allTemps.push(day.minTemp);
+        allTemps.push(day.maxTemp);
+
+        // Score each temperature
+        allScores.push(calculateTemperatureScore(day.minTemp, idealTemp));
+        allScores.push(calculateTemperatureScore(day.maxTemp, idealTemp));
+    });
+
+    // Calculate average temperature
+    const avgTemp = Math.round(allTemps.reduce((sum, temp) => sum + temp, 0) / allTemps.length);
+
+    // Calculate average score
+    const avgScore = allScores.reduce((sum, score) => sum + score, 0) / allScores.length;
+
+    return { score: avgScore, avgTemp: avgTemp };
+}
+
+// Calculate temperature score for a single temperature value
 function calculateTemperatureScore(temp, idealTemp) {
     const diff = Math.abs(temp - idealTemp);
 
@@ -243,8 +271,12 @@ function formatTimezoneOffset(hours) {
 function calculateHappinessScore(city, profile, allCities) {
     const weights = profile.weights;
 
-    // Calculate base scores
-    const tempScore = calculateTemperatureScore(city.current.temp, profile.idealTemp);
+    // Calculate forecast-based temperature score
+    const forecastTempResult = calculateForecastTemperatureScore(city.forecast, profile.idealTemp);
+    const tempScore = forecastTempResult.score;
+    const avgTemp = forecastTempResult.avgTemp;
+
+    // Calculate other scores
     const taxScore = calculateTaxScore(city.taxRate);
     const timezoneOffsetHours = getTimezoneOffsetFromUK(city.timezone);
     const timezoneScore = calculateTimezoneScore(timezoneOffsetHours);
@@ -257,6 +289,7 @@ function calculateHappinessScore(city, profile, allCities) {
 
     // Store individual scores
     city.tempScore = tempScore;
+    city.avgTemp = avgTemp; // Store calculated average temperature
     city.taxScore = taxScore;
     city.timezoneScore = timezoneScore;
     city.costScore = costScore;

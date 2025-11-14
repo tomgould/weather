@@ -81,6 +81,7 @@
     align-items: center;
     gap: 0.25rem;
     justify-content: center;
+    margin-bottom: 0.25rem;
 }
 
 .score-number {
@@ -95,12 +96,11 @@
 }
 
 .score-label {
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
     color: var(--text-muted);
     font-weight: 600;
-    margin-top: 0.25rem;
 }
 
 .city-header {
@@ -179,6 +179,77 @@
     text-transform: uppercase;
     letter-spacing: 0.5px;
     font-weight: 500;
+}
+
+.weather-summary {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+    padding: 1.5rem;
+    background: var(--bg-secondary);
+    border-radius: 15px;
+    border: 1px solid var(--border-color);
+    position: relative;
+    z-index: 1;
+}
+
+.weather-icon {
+    font-size: 5rem;
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+    flex-shrink: 0;
+}
+
+.weather-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.weather-description {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    text-transform: capitalize;
+    font-weight: 600;
+}
+
+.weather-temps {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.temp-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.temp-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.temp-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.weather-details {
+    display: flex;
+    gap: 1.5rem;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    flex-wrap: wrap;
+}
+
+.weather-detail {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
 }
 
 .lifestyle-indicators {
@@ -370,56 +441,6 @@
     min-width: 45px;
 }
 
-.current-weather {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-    padding: 1.5rem;
-    background: var(--bg-secondary);
-    border-radius: 15px;
-    border: 1px solid var(--border-color);
-    position: relative;
-    z-index: 1;
-}
-
-.weather-icon {
-    font-size: 5rem;
-    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
-}
-
-.current-temp {
-    flex: 1;
-}
-
-.temp-display {
-    font-size: 3.5rem;
-    font-weight: 700;
-    line-height: 1;
-    margin-bottom: 0.5rem;
-}
-
-.weather-description {
-    font-size: 1.1rem;
-    color: var(--text-secondary);
-    text-transform: capitalize;
-    margin-bottom: 0.5rem;
-}
-
-.weather-details {
-    display: flex;
-    gap: 1.5rem;
-    font-size: 0.9rem;
-    color: var(--text-muted);
-    flex-wrap: wrap;
-}
-
-.weather-detail {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-}
-
 .cost-of-living-section {
     background: var(--bg-secondary);
     border-radius: 15px;
@@ -554,4 +575,3 @@
     color: var(--text-secondary);
     text-transform: capitalize;
 }
-

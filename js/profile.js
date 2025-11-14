@@ -20,15 +20,15 @@ class UserProfile {
 
             // Weights (must sum to 100)
             weights: {
-                tax: 20,
-                weather: 15,
-                costOfLiving: 14,
-                safety: 14,
-                healthcare: 10,
-                cannabis: 10,
+                tax: 27,
+                weather: 11,
+                costOfLiving: 15,
+                safety: 15,
+                healthcare: 8,
+                cannabis: 2,
                 policeRisk: 7,
-                alcohol: 7,
-                timezone: 3
+                alcohol: 9,
+                timezone: 6
             }
         };
     }
