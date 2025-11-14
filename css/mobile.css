@@ -1,0 +1,168 @@
+/* Mobile optimizations */
+@media (max-width: 768px) {
+    html, body {
+        overflow-x: hidden;
+        position: relative;
+        width: 100%;
+    }
+
+    .app-container {
+        padding: 1rem 0;
+        width: 100%;
+        max-width: 100vw;
+        overflow-x: hidden;
+    }
+
+    header {
+        padding: 0 1rem;
+        margin-bottom: 1rem;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+        width: 100%;
+    }
+
+    .header-controls {
+        width: 100%;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .profile-toggle, .export-csv {
+        padding: 0.4rem 1rem;
+        font-size: 0.85rem;
+    }
+
+    .ideal-temp-control {
+        padding: 0.4rem 0.75rem;
+        gap: 0.4rem;
+    }
+
+    .ideal-temp-control label {
+        font-size: 0.8rem;
+    }
+
+    .ideal-temp-control input {
+        width: 50px;
+        font-size: 0.9rem;
+    }
+
+    .theme-toggle {
+        padding: 0.4rem 0.75rem;
+        font-size: 1rem;
+    }
+
+    .weather-container {
+        width: 100%;
+        max-width: 100vw;
+        overflow: hidden;
+        touch-action: pan-y;
+        margin: 0;
+        padding: 0;
+    }
+
+    .weather-carousel {
+        gap: 1rem;
+        padding: 0 1rem;
+    }
+
+    .city-card {
+        min-width: calc(100vw - 2rem);
+        max-width: calc(100vw - 2rem);
+        padding: 1.5rem;
+        margin: 0;
+        border-radius: 20px;
+    }
+
+    .city-card:hover {
+        transform: none;
+    }
+
+    .score-value {
+        font-size: 1.75rem;
+    }
+
+    .score-emoji {
+        font-size: 1.5rem;
+    }
+
+    .lifestyle-indicator {
+        font-size: 0.85rem;
+        padding: 0.6rem 0.8rem;
+    }
+
+    .lifestyle-icon {
+        font-size: 1.25rem;
+    }
+
+    .bar-chart-label {
+        font-size: 0.8rem;
+    }
+
+    .bar-chart-value {
+        font-size: 0.8rem;
+    }
+
+    .bar-chart-bar {
+        height: 20px;
+    }
+
+    .forecast-day {
+        flex-wrap: wrap;
+        padding: 0.875rem;
+    }
+
+    .forecast-condition {
+        flex-basis: 100%;
+        text-align: left;
+        margin-top: 0.5rem;
+    }
+
+    .carousel-dots {
+        padding: 0 1rem;
+    }
+
+    /* Profile panel mobile */
+    .profile-panel {
+        width: 100%;
+        right: -100%;
+    }
+
+    .profile-panel.open {
+        right: 0;
+    }
+
+    .profile-panel-content {
+        padding: 1.5rem;
+    }
+
+    .profile-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .weight-slider {
+        margin-bottom: 1rem;
+    }
+
+    .weight-label {
+        font-size: 0.85rem;
+    }
+
+    .weight-value {
+        font-size: 0.85rem;
+    }
+}
+
+/* Tablet optimizations */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .header-controls {
+        gap: 0.75rem;
+    }
+
+    .profile-panel {
+        width: 400px;
+        right: -400px;
+    }
+}
