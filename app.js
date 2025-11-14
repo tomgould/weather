@@ -7,9 +7,9 @@ const CITIES = [
     { name: 'London', country: 'GB', taxRate: 50 },
     { name: 'Tbilisi', country: 'GE', taxRate: 1 },
     { name: 'Paphos', country: 'CY', taxRate: 12.5 },
-    { name: 'Bangkok', country: 'TH', taxRate: 20 },
-    { name: 'Phuket', country: 'TH', taxRate: 20 },
-    { name: 'Cancun', country: 'MX', taxRate: 20 }
+    { name: 'Bangkok', country: 'TH', taxRate: 30.5 },
+    { name: 'Phuket', country: 'TH', taxRate: 30.5 },
+    { name: 'Cancun', country: 'MX', taxRate: 26.5 }
 ];
 
 // Weather icon mapping
@@ -80,6 +80,43 @@ function initIdealTempControl() {
         idealTemp = parseInt(e.target.value);
         recalculateScores();
     });
+}
+
+// Get UK timezone offset (accounting for DST)
+function getUKTimezoneOffset() {
+    // Get current time in UK timezone
+    const ukTime = new Date().toLocaleString('en-US', { timeZone: 'Europe/London' });
+    const ukDate = new Date(ukTime);
+
+    // Calculate offset in seconds from UTC
+    const utcTime = new Date().toLocaleString('en-US', { timeZone: 'UTC' });
+    const utcDate = new Date(utcTime);
+
+    const offsetMs = ukDate - utcDate;
+    return offsetMs / 1000; // Return in seconds
+}
+// Calculate timezone difference from UK in hours
+function getTimezoneOffsetFromUK(cityTimezoneOffset) {
+    const ukOffset = getUKTimezoneOffset();
+    const differenceSeconds = cityTimezoneOffset - ukOffset;
+    return differenceSeconds / 3600; // Convert to hours
+}
+
+// Format timezone difference for display
+function formatTimezoneOffset(hours) {
+    const absHours = Math.abs(hours);
+    const wholeHours = Math.floor(absHours);
+    const minutes = Math.round((absHours - wholeHours) * 60);
+
+    if (hours === 0) {
+        return 'Same as UK';
+    }
+
+    const sign = hours > 0 ? '+' : '';
+    if (minutes === 0) {
+        return `${sign}${wholeHours}h from UK`;
+    }
+    return `${sign}${wholeHours}h ${minutes}m from UK`;
 }
 
 // Weather Data Loading
@@ -243,11 +280,19 @@ function calculateHappinessScores() {
     weatherData.forEach(data => {
         const tempScore = calculateTemperatureScore(data.current.temp);
         const taxScore = calculateTaxScore(data.taxRate);
+        const timezoneOffsetHours = getTimezoneOffsetFromUK(data.timezone);
+        const timezoneScore = calculateTimezoneScore(timezoneOffsetHours);
 
-        // 40% weather, 60% tax
-        data.happinessScore = Math.round((tempScore * 0.4) + (taxScore * 0.6));
+        // Store individual scores
         data.tempScore = tempScore;
         data.taxScore = taxScore;
+        data.timezoneScore = timezoneScore;
+        data.timezoneOffsetHours = timezoneOffsetHours;
+
+        // New weighting: 50% tax, 25% weather, 25% timezone
+        data.happinessScore = Math.round(
+            (taxScore * 0.5) + (tempScore * 0.25) + (timezoneScore * 0.25)
+        );
     });
 }
 
@@ -285,6 +330,18 @@ function calculateTaxScore(taxRate) {
     } else {
         return Math.max(0, 50 - ((taxRate - 30) * 2.5));
     }
+}
+
+// Calculate timezone score
+function calculateTimezoneScore(hoursDifference) {
+    const absHours = Math.abs(hoursDifference);
+
+    // 0 hours = 100, 12+ hours = 0, linear between
+    if (absHours >= 12) {
+        return 0;
+    }
+
+    return Math.round(100 - (absHours / 12 * 100));
 }
 
 // Get color for score
@@ -396,12 +453,43 @@ function createCityCard(data, rank) {
                     <span>🕐</span>
                     <span class="time-display">--:--:--</span>
                 </div>
+                <div class="timezone-offset">
+                    <span>🌍</span>
+                    <span>${formatTimezoneOffset(data.timezoneOffsetHours)}</span>
+                </div>
             </div>
             <div class="tax-badge" style="background-color: ${taxColor}">
                 <div class="tax-icon">💰</div>
                 <div class="tax-info">
                     <div class="tax-rate">${data.taxRate}%</div>
                     <div class="tax-label">Tax Rate</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="score-breakdown">
+            <h3 class="breakdown-title">Score Breakdown</h3>
+            <div class="breakdown-grid">
+                <div class="breakdown-item">
+                    <div class="breakdown-label">
+                        <span class="breakdown-icon">💰</span>
+                        <span>Tax (50%)</span>
+                    </div>
+                    <div class="breakdown-score" style="color: ${getScoreColor(data.taxScore)}">${Math.round(data.taxScore)}</div>
+                </div>
+                <div class="breakdown-item">
+                    <div class="breakdown-label">
+                        <span class="breakdown-icon">🌡️</span>
+                        <span>Weather (25%)</span>
+                    </div>
+                    <div class="breakdown-score" style="color: ${getScoreColor(data.tempScore)}">${Math.round(data.tempScore)}</div>
+                </div>
+                <div class="breakdown-item">
+                    <div class="breakdown-label">
+                        <span class="breakdown-icon">🌍</span>
+                        <span>Timezone (25%)</span>
+                    </div>
+                    <div class="breakdown-score" style="color: ${getScoreColor(data.timezoneScore)}">${Math.round(data.timezoneScore)}</div>
                 </div>
             </div>
         </div>
@@ -549,3 +637,4 @@ function getLocalTime(timezoneOffset) {
         hour12: false
     });
 }
+
