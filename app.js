@@ -726,25 +726,29 @@ function startCarousel() {
 
 function getCardWidth() {
     if (isMobile) {
-        return window.innerWidth - 16;
+        // Card is calc(100vw - 2rem) which is viewport - 32px
+        // Gap is 1rem = 16px
+        // Total distance to next card = card_width + gap = (vw - 32) + 16
+        return window.innerWidth - 32; // Just the card width
     }
-    return 450 + 32;
+    return 450; // desktop card width only (gap handled separately)
 }
 
 function scrollCarousel() {
     const carousel = document.getElementById('weatherCarousel');
     const cardWidth = getCardWidth();
+    const gap = isMobile ? 16 : 32;
 
-    currentOffset -= (cardWidth + (isMobile ? 16 : 0));
+    currentOffset -= (cardWidth + gap);
     carousel.style.transform = `translateX(${currentOffset}px)`;
 
     setTimeout(() => {
-        if (Math.abs(currentOffset) >= cardWidth) {
+        if (Math.abs(currentOffset) >= (cardWidth + gap)) {
             const firstCard = carousel.firstElementChild;
             carousel.appendChild(firstCard);
 
             carousel.style.transition = 'none';
-            currentOffset += (cardWidth + (isMobile ? 16 : 0));
+            currentOffset += (cardWidth + gap);
             carousel.style.transform = `translateX(${currentOffset}px)`;
 
             requestAnimationFrame(() => {
@@ -759,7 +763,8 @@ function scrollCarousel() {
 function scrollToCard(index) {
     const carousel = document.getElementById('weatherCarousel');
     const cardWidth = getCardWidth();
-    currentOffset = -index * (cardWidth + (isMobile ? 16 : 0));
+    const gap = isMobile ? 16 : 32; // 1rem or 2rem gap
+    currentOffset = -index * (cardWidth + gap);
     carousel.style.transform = `translateX(${currentOffset}px)`;
     updateDots(index);
 }
