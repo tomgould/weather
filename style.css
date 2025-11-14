@@ -449,6 +449,61 @@ h1 {
     gap: 0.4rem;
 }
 
+.cost-of-living-section {
+    background: var(--bg-secondary);
+    border-radius: 15px;
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--border-color);
+    position: relative;
+    z-index: 1;
+}
+
+.cost-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-secondary);
+}
+
+.cost-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.cost-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.cost-item:last-child {
+    border-bottom: none;
+}
+
+.cost-label {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    flex: 1;
+}
+
+.cost-value {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-align: right;
+}
+
+.cost-gbp {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 400;
+    margin-left: 0.25rem;
+}
+
 .forecast-section {
     margin-top: 1.5rem;
     position: relative;
@@ -733,6 +788,27 @@ h1 {
 
     .weather-details {
         justify-content: center;
+    }
+
+    .cost-of-living-section {
+        padding: 1rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .cost-title {
+        font-size: 0.95rem;
+    }
+
+    .cost-label {
+        font-size: 0.8rem;
+    }
+
+    .cost-value {
+        font-size: 0.8rem;
+    }
+
+    .cost-gbp {
+        font-size: 0.7rem;
     }
 
     .forecast-day {

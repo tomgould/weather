@@ -2,14 +2,134 @@
 const API_KEY = '9c0e09a72bb01808057ddd72e429269a';
 const API_BASE = 'https://api.openweathermap.org/data/2.5';
 
-// Cities to display
+// Cities with cost of living data (all prices converted to GBP for easy comparison)
+// Source: Numbeo (November 2025)
 const CITIES = [
-    { name: 'London', country: 'GB', taxRate: 50 },
-    { name: 'Tbilisi', country: 'GE', taxRate: 1 },
-    { name: 'Paphos', country: 'CY', taxRate: 12.5 },
-    { name: 'Bangkok', country: 'TH', taxRate: 30.5 },
-    { name: 'Phuket', country: 'TH', taxRate: 30.5 },
-    { name: 'Cancun', country: 'MX', taxRate: 26.5 }
+    {
+        name: 'London',
+        country: 'GB',
+        taxRate: 50,
+        costOfLiving: {
+            currency: 'GBP',
+            items: {
+                'Meal at Inexpensive Restaurant': 20.00,
+                'Domestic Beer (Pint)': 6.50,
+                'Cappuccino': 4.01,
+                'Milk (1L)': 1.28,
+                'Bread (Loaf)': 1.42,
+                'Cigarettes (Pack of 20)': 16.90,
+                '1 Bedroom Apartment (City Centre)': 2346.27,
+                'Internet (60 Mbps)': 33.20,
+                'Monthly Transport Pass': 180.00,
+                'Utilities (Monthly, 85m²)': 256.98
+            }
+        }
+    },
+    {
+        name: 'Tbilisi',
+        country: 'GE',
+        taxRate: 1,
+        costOfLiving: {
+            currency: 'GEL',
+            exchangeRate: 0.29,
+            items: {
+                'Meal at Inexpensive Restaurant': 30.00,
+                'Domestic Beer (Pint)': 6.00,
+                'Cappuccino': 8.09,
+                'Milk (1L)': 5.09,
+                'Bread (Loaf)': 1.81,
+                'Cigarettes (Pack of 20)': 8.10,
+                '1 Bedroom Apartment (City Centre)': 1962.12,
+                'Internet (60 Mbps)': 54.53,
+                'Monthly Transport Pass': 40.00,
+                'Utilities (Monthly, 85m²)': 208.73
+            }
+        }
+    },
+    {
+        name: 'Paphos',
+        country: 'CY',
+        taxRate: 12.5,
+        costOfLiving: {
+            currency: 'EUR',
+            exchangeRate: 0.84,
+            items: {
+                'Meal at Inexpensive Restaurant': 15.00,
+                'Domestic Beer (Pint)': 3.00,
+                'Cappuccino': 3.24,
+                'Milk (1L)': 1.61,
+                'Bread (Loaf)': 1.13,
+                'Cigarettes (Pack of 20)': 5.00,
+                '1 Bedroom Apartment (City Centre)': 955.56,
+                'Internet (60 Mbps)': 32.00,
+                'Monthly Transport Pass': 50.00,
+                'Utilities (Monthly, 85m²)': 163.14
+            }
+        }
+    },
+    {
+        name: 'Bangkok',
+        country: 'TH',
+        taxRate: 30.5,
+        costOfLiving: {
+            currency: 'THB',
+            exchangeRate: 0.023,
+            items: {
+                'Meal at Inexpensive Restaurant': 100.00,
+                'Domestic Beer (Pint)': 90.00,
+                'Cappuccino': 81.92,
+                'Milk (1L)': 58.29,
+                'Bread (Loaf)': 42.13,
+                'Cigarettes (Pack of 20)': 140.00,
+                '1 Bedroom Apartment (City Centre)': 21760.33,
+                'Internet (60 Mbps)': 546.78,
+                'Monthly Transport Pass': 1200.00,
+                'Utilities (Monthly, 85m²)': 2896.97
+            }
+        }
+    },
+    {
+        name: 'Phuket',
+        country: 'TH',
+        taxRate: 30.5,
+        costOfLiving: {
+            currency: 'THB',
+            exchangeRate: 0.023,
+            items: {
+                'Meal at Inexpensive Restaurant': 120.00,
+                'Domestic Beer (Pint)': 100.00,
+                'Cappuccino': 95.00,
+                'Milk (1L)': 65.00,
+                'Bread (Loaf)': 48.00,
+                'Cigarettes (Pack of 20)': 145.00,
+                '1 Bedroom Apartment (City Centre)': 23500.00,
+                'Internet (60 Mbps)': 600.00,
+                'Monthly Transport Pass': 1300.00,
+                'Utilities (Monthly, 85m²)': 3150.00
+            }
+        }
+    },
+    {
+        name: 'Cancun',
+        country: 'MX',
+        taxRate: 26.5,
+        costOfLiving: {
+            currency: 'MXN',
+            exchangeRate: 0.041,
+            items: {
+                'Meal at Inexpensive Restaurant': 231.71,
+                'Domestic Beer (Pint)': 57.50,
+                'Cappuccino': 63.86,
+                'Milk (1L)': 26.87,
+                'Bread (Loaf)': 42.51,
+                'Cigarettes (Pack of 20)': 80.00,
+                '1 Bedroom Apartment (City Centre)': 12285.71,
+                'Internet (60 Mbps)': 700.00,
+                'Monthly Transport Pass': 500.00,
+                'Utilities (Monthly, 85m²)': 3233.33
+            }
+        }
+    }
 ];
 
 // Weather icon mapping
@@ -48,10 +168,8 @@ document.addEventListener('DOMContentLoaded', () => {
     initIdealTempControl();
     loadWeatherData();
 
-    // Update times every second
     setInterval(updateAllTimes, 1000);
 
-    // Handle resize
     window.addEventListener('resize', () => {
         isMobile = window.innerWidth <= 768;
     });
@@ -84,22 +202,21 @@ function initIdealTempControl() {
 
 // Get UK timezone offset (accounting for DST)
 function getUKTimezoneOffset() {
-    // Get current time in UK timezone
     const ukTime = new Date().toLocaleString('en-US', { timeZone: 'Europe/London' });
     const ukDate = new Date(ukTime);
 
-    // Calculate offset in seconds from UTC
     const utcTime = new Date().toLocaleString('en-US', { timeZone: 'UTC' });
     const utcDate = new Date(utcTime);
 
     const offsetMs = ukDate - utcDate;
-    return offsetMs / 1000; // Return in seconds
+    return offsetMs / 1000;
 }
+
 // Calculate timezone difference from UK in hours
 function getTimezoneOffsetFromUK(cityTimezoneOffset) {
     const ukOffset = getUKTimezoneOffset();
     const differenceSeconds = cityTimezoneOffset - ukOffset;
-    return differenceSeconds / 3600; // Convert to hours
+    return differenceSeconds / 3600;
 }
 
 // Format timezone difference for display
@@ -119,6 +236,43 @@ function formatTimezoneOffset(hours) {
     return `${sign}${wholeHours}h ${minutes}m from UK`;
 }
 
+// Convert cost to GBP for comparison
+function convertToGBP(amount, currency, exchangeRate) {
+    if (currency === 'GBP') {
+        return amount;
+    }
+    return amount * exchangeRate;
+}
+
+// Calculate total monthly cost in GBP
+function calculateTotalMonthlyCost(city) {
+    const items = city.costOfLiving.items;
+    const exchangeRate = city.costOfLiving.exchangeRate || 1;
+
+    const rentGBP = convertToGBP(items['1 Bedroom Apartment (City Centre)'], city.costOfLiving.currency, exchangeRate);
+    const utilitiesGBP = convertToGBP(items['Utilities (Monthly, 85m²)'], city.costOfLiving.currency, exchangeRate);
+    const transportGBP = convertToGBP(items['Monthly Transport Pass'], city.costOfLiving.currency, exchangeRate);
+    const internetGBP = convertToGBP(items['Internet (60 Mbps)'], city.costOfLiving.currency, exchangeRate);
+    const mealGBP = convertToGBP(items['Meal at Inexpensive Restaurant'], city.costOfLiving.currency, exchangeRate);
+
+    const monthlyFood = mealGBP * 30 * 2;
+    const monthlyTotal = rentGBP + utilitiesGBP + transportGBP + internetGBP + monthlyFood;
+
+    return monthlyTotal;
+}
+
+// Calculate cost of living score (0-100, lower cost = higher score)
+function calculateCostOfLivingScore(city, allCities) {
+    const costs = allCities.map(c => calculateTotalMonthlyCost(c));
+    const minCost = Math.min(...costs);
+    const maxCost = Math.max(...costs);
+    const currentCost = calculateTotalMonthlyCost(city);
+
+    if (maxCost === minCost) return 100;
+    const score = 100 - ((currentCost - minCost) / (maxCost - minCost) * 100);
+    return Math.max(0, Math.min(100, score));
+}
+
 // Weather Data Loading
 async function loadWeatherData() {
     const carousel = document.getElementById('weatherCarousel');
@@ -127,40 +281,21 @@ async function loadWeatherData() {
         const weatherPromises = CITIES.map(city => fetchCityWeather(city));
         const results = await Promise.all(weatherPromises);
 
-        // Filter out failed requests
         weatherData = results.filter(data => data !== null);
 
         if (weatherData.length === 0) {
             carousel.innerHTML = `
                 <div class="error-message">
                     <h3>⚠️ API Key Error</h3>
-                    <p>Unable to fetch weather data. This is usually because:</p>
-                    <ul style="text-align: left; margin: 1rem auto; max-width: 500px;">
-                        <li>Your OpenWeatherMap API key needs to be activated (check your email)</li>
-                        <li>New API keys can take 10-15 minutes to become active</li>
-                        <li>The API key may be invalid</li>
-                    </ul>
-                    <p><strong>Current API Key:</strong> ${API_KEY.substring(0, 8)}...</p>
-                    <p style="margin-top: 1rem;">
-                        <a href="https://home.openweathermap.org/api_keys" target="_blank" style="color: #3b82f6; text-decoration: underline;">
-                            Check your API keys at OpenWeatherMap
-                        </a>
-                    </p>
+                    <p>Unable to fetch weather data.</p>
                 </div>
             `;
             return;
         }
 
-        // Calculate happiness scores
         calculateHappinessScores();
-
-        // Sort by happiness score (highest first)
         weatherData.sort((a, b) => b.happinessScore - a.happinessScore);
-
-        // Render cards
         renderCards();
-
-        // Start carousel
         startCarousel();
 
     } catch (error) {
@@ -169,7 +304,6 @@ async function loadWeatherData() {
             <div class="error-message">
                 <h3>❌ Error Loading Weather Data</h3>
                 <p>${error.message}</p>
-                <p style="margin-top: 1rem;">Please check the console for more details.</p>
             </div>
         `;
     }
@@ -203,6 +337,7 @@ async function fetchCityWeather(city) {
             country: currentData.sys.country,
             timezone: currentData.timezone,
             taxRate: city.taxRate,
+            costOfLiving: city.costOfLiving,
             current: {
                 temp: Math.round(currentData.main.temp),
                 feelsLike: Math.round(currentData.main.feels_like),
@@ -282,39 +417,36 @@ function calculateHappinessScores() {
         const taxScore = calculateTaxScore(data.taxRate);
         const timezoneOffsetHours = getTimezoneOffsetFromUK(data.timezone);
         const timezoneScore = calculateTimezoneScore(timezoneOffsetHours);
+        const costScore = calculateCostOfLivingScore(data, weatherData);
 
-        // Store individual scores
         data.tempScore = tempScore;
         data.taxScore = taxScore;
         data.timezoneScore = timezoneScore;
+        data.costScore = costScore;
         data.timezoneOffsetHours = timezoneOffsetHours;
 
-        // New weighting: 50% tax, 25% weather, 25% timezone
+        // Weighting: 50% tax, 20% weather, 15% timezone, 15% cost of living
         data.happinessScore = Math.round(
-            (taxScore * 0.5) + (tempScore * 0.25) + (timezoneScore * 0.25)
+            (taxScore * 0.5) + (tempScore * 0.2) + (timezoneScore * 0.15) + (costScore * 0.15)
         );
     });
 }
 
 // Calculate temperature score
 function calculateTemperatureScore(temp) {
-    // Perfect range: 28-32°C
     if (temp >= 28 && temp <= 32) {
         return 100;
     }
 
-    // Below 28°C - linear penalty
     if (temp < 28) {
         return Math.max(0, (temp / 28) * 100);
     }
 
-    // Above 32°C
     if (temp <= 40) {
         const penalty = ((temp - 32) / 8) * 100;
         return Math.max(0, 100 - penalty);
     }
 
-    // Above 40°C - half rate penalty
     const penalty = ((temp - 32) / 16) * 100;
     return Math.max(0, 100 - penalty);
 }
@@ -336,7 +468,6 @@ function calculateTaxScore(taxRate) {
 function calculateTimezoneScore(hoursDifference) {
     const absHours = Math.abs(hoursDifference);
 
-    // 0 hours = 100, 12+ hours = 0, linear between
     if (absHours >= 12) {
         return 0;
     }
@@ -393,6 +524,19 @@ function getTaxRateColor(rate) {
     return '#ef4444';
 }
 
+// Format currency
+function formatCurrency(amount, currency) {
+    const symbols = {
+        'GBP': '£',
+        'EUR': '€',
+        'USD': '$',
+        'THB': '฿',
+        'GEL': '₾',
+        'MXN': '$'
+    };
+    return `${symbols[currency] || ''}${amount.toFixed(2)}`;
+}
+
 // Render cards
 function renderCards() {
     const carousel = document.getElementById('weatherCarousel');
@@ -417,6 +561,17 @@ function createCityCard(data, rank) {
 
     card.style.setProperty('--card-border-gradient', `linear-gradient(135deg, ${scoreColor}, ${scoreColor})`);
     card.style.setProperty('--card-bg-gradient', `linear-gradient(135deg, ${scoreColor}, ${scoreColor})`);
+
+    // Cost of living items HTML
+    const costItemsHTML = Object.entries(data.costOfLiving.items).map(([item, price]) => {
+        const priceGBP = convertToGBP(price, data.costOfLiving.currency, data.costOfLiving.exchangeRate || 1);
+        return `
+            <div class="cost-item">
+                <span class="cost-label">${item}</span>
+                <span class="cost-value">${formatCurrency(price, data.costOfLiving.currency)} <span class="cost-gbp">(£${priceGBP.toFixed(2)})</span></span>
+            </div>
+        `;
+    }).join('');
 
     const forecastHTML = data.forecast.map(day => {
         const dayName = day.date.toLocaleDateString('en-US', { weekday: 'short' });
@@ -480,16 +635,23 @@ function createCityCard(data, rank) {
                 <div class="breakdown-item">
                     <div class="breakdown-label">
                         <span class="breakdown-icon">🌡️</span>
-                        <span>Weather (25%)</span>
+                        <span>Weather (20%)</span>
                     </div>
                     <div class="breakdown-score" style="color: ${getScoreColor(data.tempScore)}">${Math.round(data.tempScore)}</div>
                 </div>
                 <div class="breakdown-item">
                     <div class="breakdown-label">
                         <span class="breakdown-icon">🌍</span>
-                        <span>Timezone (25%)</span>
+                        <span>Timezone (15%)</span>
                     </div>
                     <div class="breakdown-score" style="color: ${getScoreColor(data.timezoneScore)}">${Math.round(data.timezoneScore)}</div>
+                </div>
+                <div class="breakdown-item">
+                    <div class="breakdown-label">
+                        <span class="breakdown-icon">💷</span>
+                        <span>Cost of Living (15%)</span>
+                    </div>
+                    <div class="breakdown-score" style="color: ${getScoreColor(data.costScore)}">${Math.round(data.costScore)}</div>
                 </div>
             </div>
         </div>
@@ -516,6 +678,13 @@ function createCityCard(data, rank) {
             </div>
         </div>
 
+        <div class="cost-of-living-section">
+            <h3 class="cost-title">💷 Cost of Living</h3>
+            <div class="cost-grid">
+                ${costItemsHTML}
+            </div>
+        </div>
+
         <div class="forecast-section">
             <h3 class="forecast-title">${data.forecast.length}-Day Forecast</h3>
             <div class="forecast-grid">
@@ -527,7 +696,7 @@ function createCityCard(data, rank) {
     return card;
 }
 
-// Recalculate scores when ideal temp changes
+// Recalculate scores
 function recalculateScores() {
     calculateHappinessScores();
     weatherData.sort((a, b) => b.happinessScore - a.happinessScore);
@@ -557,17 +726,16 @@ function startCarousel() {
 
 function getCardWidth() {
     if (isMobile) {
-        // Card width + gap (1rem on each side of carousel = 2rem total)
-        return window.innerWidth - 16; // 16px = 1rem padding on each side
+        return window.innerWidth - 16;
     }
-    return 450 + 32; // desktop card width + gap
+    return 450 + 32;
 }
 
 function scrollCarousel() {
     const carousel = document.getElementById('weatherCarousel');
     const cardWidth = getCardWidth();
 
-    currentOffset -= (cardWidth + (isMobile ? 16 : 0)); // Add gap for mobile
+    currentOffset -= (cardWidth + (isMobile ? 16 : 0));
     carousel.style.transform = `translateX(${currentOffset}px)`;
 
     setTimeout(() => {
