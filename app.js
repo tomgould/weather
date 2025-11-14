@@ -129,6 +129,382 @@ const CITIES = [
                 'Utilities (Monthly, 85m²)': 3233.33
             }
         }
+    },
+    {
+        name: 'Marbella',
+        country: 'ES',
+        taxRate: 43,
+        costOfLiving: {
+            currency: 'EUR',
+            exchangeRate: 0.84,
+            items: {
+                'Meal at Inexpensive Restaurant': 12.50,
+                'Domestic Beer (Pint)': 2.00,
+                'Cappuccino': 1.88,
+                'Milk (1L)': 0.99,
+                'Bread (Loaf)': 1.19,
+                'Cigarettes (Pack of 20)': 5.60,
+                '1 Bedroom Apartment (City Centre)': 1313.75,
+                'Internet (60 Mbps)': 28.75,
+                'Monthly Transport Pass': 70.00,
+                'Utilities (Monthly, 85m²)': 94.86
+            }
+        }
+    },
+    {
+        name: 'Lisbon',
+        country: 'PT',
+        taxRate: 46,
+        costOfLiving: {
+            currency: 'EUR',
+            exchangeRate: 0.84,
+            items: {
+                'Meal at Inexpensive Restaurant': 14.00,
+                'Domestic Beer (Pint)': 3.00,
+                'Cappuccino': 2.41,
+                'Milk (1L)': 0.99,
+                'Bread (Loaf)': 1.40,
+                'Cigarettes (Pack of 20)': 5.80,
+                '1 Bedroom Apartment (City Centre)': 1431.45,
+                'Internet (60 Mbps)': 33.99,
+                'Monthly Transport Pass': 40.00,
+                'Utilities (Monthly, 85m²)': 126.98
+            }
+        }
+    },
+    {
+        name: 'Dubai',
+        country: 'AE',
+        taxRate: 0,
+        costOfLiving: {
+            currency: 'AED',
+            exchangeRate: 0.21,
+            items: {
+                'Meal at Inexpensive Restaurant': 40.00,
+                'Domestic Beer (Pint)': 50.00,
+                'Cappuccino': 20.68,
+                'Milk (1L)': 7.12,
+                'Bread (Loaf)': 4.66,
+                'Cigarettes (Pack of 20)': 23.00,
+                '1 Bedroom Apartment (City Centre)': 8880.95,
+                'Internet (60 Mbps)': 353.12,
+                'Monthly Transport Pass': 340.00,
+                'Utilities (Monthly, 85m²)': 799.55
+            }
+        }
+    },
+    {
+        name: 'Longyearbyen',
+        country: 'NO', // Svalbard, Norway
+        taxRate: 38,
+        costOfLiving: {
+            currency: 'NOK',
+            exchangeRate: 0.073,
+            items: {
+                'Meal at Inexpensive Restaurant': 300.00,
+                'Domestic Beer (Pint)': 120.00,
+                'Cappuccino': 60.00,
+                'Milk (1L)': 20.00,
+                'Bread (Loaf)': 35.00,
+                'Cigarettes (Pack of 20)': 160.00,
+                '1 Bedroom Apartment (City Centre)': 12000.00,
+                'Internet (60 Mbps)': 800.00,
+                'Monthly Transport Pass': 0.00, // Very limited public transport
+                'Utilities (Monthly, 85m²)': 1500.00
+            }
+        }
+    },
+    {
+        name: 'Copenhagen',
+        country: 'DK',
+        taxRate: 42,
+        costOfLiving: {
+            currency: 'DKK',
+            exchangeRate: 0.12,
+            items: {
+                'Meal at Inexpensive Restaurant': 180.00,
+                'Domestic Beer (Pint)': 60.00,
+                'Cappuccino': 43.54,
+                'Milk (1L)': 14.73,
+                'Bread (Loaf)': 28.33,
+                'Cigarettes (Pack of 20)': 65.00,
+                '1 Bedroom Apartment (City Centre)': 13515.59,
+                'Internet (60 Mbps)': 273.21,
+                'Monthly Transport Pass': 800.00,
+                'Utilities (Monthly, 85m²)': 1140.56
+            }
+        }
+    },
+    {
+        name: 'Reykjavik',
+        country: 'IS',
+        taxRate: 40,
+        costOfLiving: {
+            currency: 'ISK',
+            exchangeRate: 0.0056,
+            items: {
+                'Meal at Inexpensive Restaurant': 3350.00,
+                'Domestic Beer (Pint)': 1600.00,
+                'Cappuccino': 753.16,
+                'Milk (1L)': 243.48,
+                'Bread (Loaf)': 502.90,
+                'Cigarettes (Pack of 20)': 1699.00,
+                '1 Bedroom Apartment (City Centre)': 275476.19,
+                'Internet (60 Mbps)': 10275.00,
+                'Monthly Transport Pass': 10800.00,
+                'Utilities (Monthly, 85m²)': 9925.90
+            }
+        }
+    },
+    {
+        name: 'Ulaanbaatar',
+        country: 'MN',
+        taxRate: 20,
+        costOfLiving: {
+            currency: 'MNT',
+            exchangeRate: 0.00029,
+            items: {
+                'Meal at Inexpensive Restaurant': 20000.00,
+                'Domestic Beer (Pint)': 6000.00,
+                'Cappuccino': 8500.00,
+                'Milk (1L)': 2800.00,
+                'Bread (Loaf)': 1500.00,
+                'Cigarettes (Pack of 20)': 5500.00,
+                '1 Bedroom Apartment (City Centre)': 1200000.00,
+                'Internet (60 Mbps)': 35000.00,
+                'Monthly Transport Pass': 15000.00,
+                'Utilities (Monthly, 85m²)': 95000.00
+            }
+        }
+    },
+    {
+        name: 'Moscow',
+        country: 'RU',
+        taxRate: 13,
+        costOfLiving: {
+            currency: 'RUB',
+            exchangeRate: 0.010,
+            items: {
+                'Meal at Inexpensive Restaurant': 800.00,
+                'Domestic Beer (Pint)': 350.00,
+                'Cappuccino': 265.29,
+                'Milk (1L)': 104.76,
+                'Bread (Loaf)': 54.05,
+                'Cigarettes (Pack of 20)': 200.00,
+                '1 Bedroom Apartment (City Centre)': 110000.00,
+                'Internet (60 Mbps)': 568.20,
+                'Monthly Transport Pass': 2970.00,
+                'Utilities (Monthly, 85m²)': 9247.06
+            }
+        }
+    },
+    {
+        name: 'Kyiv',
+        country: 'UA',
+        taxRate: 19.5,
+        costOfLiving: {
+            currency: 'UAH',
+            exchangeRate: 0.024,
+            items: {
+                'Meal at Inexpensive Restaurant': 300.00,
+                'Domestic Beer (Pint)': 55.00,
+                'Cappuccino': 71.00,
+                'Milk (1L)': 45.20,
+                'Bread (Loaf)': 19.70,
+                'Cigarettes (Pack of 20)': 90.00,
+                '1 Bedroom Apartment (City Centre)': 15000.00,
+                'Internet (60 Mbps)': 183.00,
+                'Monthly Transport Pass': 300.00,
+                'Utilities (Monthly, 85m²)': 3500.00
+            }
+        }
+    },
+    {
+        name: 'Warsaw',
+        country: 'PL',
+        taxRate: 28,
+        costOfLiving: {
+            currency: 'PLN',
+            exchangeRate: 0.20,
+            items: {
+                'Meal at Inexpensive Restaurant': 40.00,
+                'Domestic Beer (Pint)': 12.00,
+                'Cappuccino': 15.70,
+                'Milk (1L)': 3.60,
+                'Bread (Loaf)': 4.26,
+                'Cigarettes (Pack of 20)': 21.00,
+                '1 Bedroom Apartment (City Centre)': 3500.00,
+                'Internet (60 Mbps)': 60.00,
+                'Monthly Transport Pass': 110.00,
+                'Utilities (Monthly, 85m²)': 900.00
+            }
+        }
+    },
+    {
+        name: 'New York',
+        country: 'US',
+        taxRate: 35,
+        costOfLiving: {
+            currency: 'USD',
+            items: {
+                'Meal at Inexpensive Restaurant': 25.00,
+                'Domestic Beer (Pint)': 8.00,
+                'Cappuccino': 5.70,
+                'Milk (1L)': 1.57,
+                'Bread (Loaf)': 4.38,
+                'Cigarettes (Pack of 20)': 20.00,
+                '1 Bedroom Apartment (City Centre)': 4111.11,
+                'Internet (60 Mbps)': 65.93,
+                'Monthly Transport Pass': 133.00,
+                'Utilities (Monthly, 85m²)': 191.02
+            }
+        }
+    },
+    {
+        name: 'Los Angeles',
+        country: 'US',
+        taxRate: 33,
+        costOfLiving: {
+            currency: 'USD',
+            items: {
+                'Meal at Inexpensive Restaurant': 22.00,
+                'Domestic Beer (Pint)': 8.00,
+                'Cappuccino': 5.50,
+                'Milk (1L)': 1.46,
+                'Bread (Loaf)': 4.25,
+                'Cigarettes (Pack of 20)': 13.00,
+                '1 Bedroom Apartment (City Centre)': 2800.00,
+                'Internet (60 Mbps)': 65.00,
+                'Monthly Transport Pass': 100.00,
+                'Utilities (Monthly, 85m²)': 150.00
+            }
+        }
+    },
+    {
+        name: 'Toronto',
+        country: 'CA',
+        taxRate: 36,
+        costOfLiving: {
+            currency: 'CAD',
+            exchangeRate: 0.56,
+            items: {
+                'Meal at Inexpensive Restaurant': 25.00,
+                'Domestic Beer (Pint)': 8.00,
+                'Cappuccino': 5.39,
+                'Milk (1L)': 3.33,
+                'Bread (Loaf)': 3.56,
+                'Cigarettes (Pack of 20)': 20.00,
+                '1 Bedroom Apartment (City Centre)': 2587.01,
+                'Internet (60 Mbps)': 76.12,
+                'Monthly Transport Pass': 156.00,
+                'Utilities (Monthly, 85m²)': 158.55
+            }
+        }
+    },
+    {
+        name: 'Melbourne',
+        country: 'AU',
+        taxRate: 39,
+        costOfLiving: {
+            currency: 'AUD',
+            exchangeRate: 0.51,
+            items: {
+                'Meal at Inexpensive Restaurant': 28.00,
+                'Domestic Beer (Pint)': 12.00,
+                'Cappuccino': 5.50,
+                'Milk (1L)': 2.18,
+                'Bread (Loaf)': 3.67,
+                'Cigarettes (Pack of 20)': 55.00,
+                '1 Bedroom Apartment (City Centre)': 2500.00,
+                'Internet (60 Mbps)': 78.00,
+                'Monthly Transport Pass': 180.00,
+                'Utilities (Monthly, 85m²)': 240.00
+            }
+        }
+    },
+    {
+        name: 'Cairo',
+        country: 'EG',
+        taxRate: 23,
+        costOfLiving: {
+            currency: 'EGP',
+            exchangeRate: 0.016,
+            items: {
+                'Meal at Inexpensive Restaurant': 150.00,
+                'Domestic Beer (Pint)': 80.00,
+                'Cappuccino': 69.48,
+                'Milk (1L)': 32.85,
+                'Bread (Loaf)': 15.00,
+                'Cigarettes (Pack of 20)': 80.00,
+                '1 Bedroom Apartment (City Centre)': 11000.00,
+                'Internet (60 Mbps)': 448.99,
+                'Monthly Transport Pass': 400.00,
+                'Utilities (Monthly, 85m²)': 715.71
+            }
+        }
+    },
+    {
+        name: 'Cape Town',
+        country: 'ZA',
+        taxRate: 38,
+        costOfLiving: {
+            currency: 'ZAR',
+            exchangeRate: 0.043,
+            items: {
+                'Meal at Inexpensive Restaurant': 150.00,
+                'Domestic Beer (Pint)': 40.00,
+                'Cappuccino': 39.26,
+                'Milk (1L)': 20.42,
+                'Bread (Loaf)': 16.62,
+                'Cigarettes (Pack of 20)': 60.00,
+                '1 Bedroom Apartment (City Centre)': 16500.00,
+                'Internet (60 Mbps)': 711.76,
+                'Monthly Transport Pass': 700.00,
+                'Utilities (Monthly, 85m²)': 1425.00
+            }
+        }
+    },
+    {
+        name: 'Nairobi',
+        country: 'KE',
+        taxRate: 30,
+        costOfLiving: {
+            currency: 'KES',
+            exchangeRate: 0.0062,
+            items: {
+                'Meal at Inexpensive Restaurant': 800.00,
+                'Domestic Beer (Pint)': 350.00,
+                'Cappuccino': 414.09,
+                'Milk (1L)': 153.33,
+                'Bread (Loaf)': 61.59,
+                'Cigarettes (Pack of 20)': 300.00,
+                '1 Bedroom Apartment (City Centre)': 65000.00,
+                'Internet (60 Mbps)': 5850.00,
+                'Monthly Transport Pass': 6000.00,
+                'Utilities (Monthly, 85m²)': 8500.00
+            }
+        }
+    },
+    {
+        name: 'Lagos',
+        country: 'NG',
+        taxRate: 20,
+        costOfLiving: {
+            currency: 'NGN',
+            exchangeRate: 0.00059,
+            items: {
+                'Meal at Inexpensive Restaurant': 8000.00,
+                'Domestic Beer (Pint)': 1500.00,
+                'Cappuccino': 2800.00,
+                'Milk (1L)': 1680.00,
+                'Bread (Loaf)': 1800.00,
+                'Cigarettes (Pack of 20)': 2000.00,
+                '1 Bedroom Apartment (City Centre)': 1200000.00,
+                'Internet (60 Mbps)': 45000.00,
+                'Monthly Transport Pass': 40000.00,
+                'Utilities (Monthly, 85m²)': 90000.00
+            }
+        }
     }
 ];
 
