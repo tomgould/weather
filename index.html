@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <div class="header-content">
+                <h1>🌍 Weather Dashboard</h1>
+                <div class="header-controls">
+                    <div class="ideal-temp-control">
+                        <label for="idealTemp">Ideal Temp:</label>
+                        <input type="number" id="idealTemp" value="30" min="0" max="50" step="1">
+                        <span>°C</span>
+                    </div>
+                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                        <span class="sun-icon">☀️</span>
+                        <span class="moon-icon">🌙</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main class="weather-container">
+            <div class="weather-carousel" id="weatherCarousel">
+                <!-- Weather cards will be dynamically inserted here -->
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Loading weather data...</p>
+                </div>
+            </div>
+            <div class="carousel-dots" id="carouselDots"></div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+
