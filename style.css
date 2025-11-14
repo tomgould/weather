@@ -256,13 +256,16 @@ h1 {
 }
 
 .score-value {
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: 900;
     line-height: 1;
     background: var(--card-border-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
 }
 
 .score-label {
@@ -352,6 +355,26 @@ h1 {
     font-weight: 500;
 }
 
+.weed-indicator {
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: white;
+    font-weight: 600;
+    font-size: 0.95rem;
+    box-shadow: var(--shadow-md);
+    position: relative;
+    z-index: 1;
+}
+
+.weed-icon {
+    font-size: 1.5rem;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
 .score-breakdown {
     background: var(--bg-secondary);
     border-radius: 15px;
@@ -397,6 +420,122 @@ h1 {
 .breakdown-score {
     font-size: 1.5rem;
     font-weight: 700;
+}
+
+.demographics-section {
+    background: var(--bg-secondary);
+    border-radius: 15px;
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--border-color);
+    position: relative;
+    z-index: 1;
+}
+
+.demographics-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-secondary);
+}
+
+.safety-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.safety-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+}
+
+.safety-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.safety-icon {
+    font-size: 1.25rem;
+}
+
+.safety-score {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.healthcare-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.healthcare-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+}
+
+.healthcare-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.healthcare-icon {
+    font-size: 1.25rem;
+}
+
+.healthcare-score {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.bar-chart {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.bar-chart-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.bar-chart-label {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.bar-chart-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.bar-chart-bar {
+    height: 24px;
+    border-radius: 6px;
+    transition: width 0.3s ease;
+    min-width: 2px;
+}
+
+.bar-chart-value {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    min-width: 45px;
 }
 
 .current-weather {
@@ -661,7 +800,7 @@ h1 {
     }
 
     h1 {
-        font-size: 1.75rem;
+        font-size: 1.5rem;
     }
 
     .header-controls {
@@ -715,151 +854,29 @@ h1 {
         transform: none;
     }
 
-    .city-header {
-        flex-direction: column;
-        gap: 1rem;
-        margin-top: 2.5rem;
+    .score-value {
+        font-size: 1.75rem;
     }
 
-    .city-info h2 {
-        font-size: 1.5rem;
-    }
-
-    .timezone-offset {
+    .weed-indicator {
         font-size: 0.85rem;
-    }
-
-    .tax-badge {
-        align-self: flex-start;
-        min-width: 100px;
         padding: 0.6rem 0.8rem;
     }
 
-    .tax-icon {
-        font-size: 1.5rem;
-    }
-
-    .tax-rate {
+    .weed-icon {
         font-size: 1.25rem;
     }
 
-    .tax-label {
-        font-size: 0.7rem;
-    }
-
-    .score-breakdown {
-        padding: 1rem;
-        margin-bottom: 1.25rem;
-    }
-
-    .breakdown-title {
-        font-size: 0.95rem;
-    }
-
-    .breakdown-label {
-        font-size: 0.85rem;
-    }
-
-    .breakdown-icon {
-        font-size: 1.1rem;
-    }
-
-    .breakdown-score {
-        font-size: 1.25rem;
-    }
-
-    .current-weather {
-        flex-direction: column;
-        text-align: center;
-        padding: 1.25rem;
-    }
-
-    .weather-icon {
-        font-size: 4rem;
-    }
-
-    .temp-display {
-        font-size: 3rem;
-    }
-
-    .weather-description {
-        font-size: 1rem;
-    }
-
-    .weather-details {
-        justify-content: center;
-    }
-
-    .cost-of-living-section {
-        padding: 1rem;
-        margin-bottom: 1.25rem;
-    }
-
-    .cost-title {
-        font-size: 0.95rem;
-    }
-
-    .cost-label {
+    .bar-chart-label {
         font-size: 0.8rem;
     }
 
-    .cost-value {
+    .bar-chart-value {
         font-size: 0.8rem;
     }
 
-    .cost-gbp {
-        font-size: 0.7rem;
-    }
-
-    .forecast-day {
-        flex-wrap: wrap;
-        padding: 0.875rem;
-    }
-
-    .forecast-condition {
-        flex-basis: 100%;
-        text-align: left;
-        margin-top: 0.5rem;
-    }
-
-    .score-value {
-        font-size: 2rem;
-    }
-
-    .score-label {
-        font-size: 0.65rem;
-    }
-
-    .rank-badge {
-        font-size: 1rem;
-        padding: 0.4rem 0.8rem;
-        top: 0.75rem;
-        left: 0.75rem;
-    }
-
-    .happiness-score {
-        top: 0.75rem;
-        right: 0.75rem;
-    }
-
-    .forecast-title {
-        font-size: 1rem;
-    }
-
-    .forecast-date {
-        min-width: 60px;
-    }
-
-    .day-name {
-        font-size: 0.875rem;
-    }
-
-    .date {
-        font-size: 0.75rem;
-    }
-
-    .forecast-icon {
-        font-size: 1.75rem;
+    .bar-chart-bar {
+        height: 20px;
     }
 
     .carousel-dots {
