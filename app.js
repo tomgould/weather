@@ -296,7 +296,7 @@ async function loadWeatherData() {
         calculateHappinessScores();
         weatherData.sort((a, b) => b.happinessScore - a.happinessScore);
         renderCards();
-        startCarousel();
+        // startCarousel();
 
     } catch (error) {
         console.error('Error loading weather data:', error);
@@ -771,7 +771,7 @@ function resetCarousel() {
     if (carouselInterval) {
         clearInterval(carouselInterval);
     }
-    startCarousel();
+    // startCarousel();  // Auto-pagination disabled
 }
 
 function updateDots(activeIndex) {
