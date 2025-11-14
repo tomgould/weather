@@ -7,9 +7,9 @@ const CITIES = [
     { name: 'London', country: 'GB', taxRate: 50 },
     { name: 'Tbilisi', country: 'GE', taxRate: 1 },
     { name: 'Paphos', country: 'CY', taxRate: 12.5 },
-    { name: 'Bangkok', country: 'TH', taxRate: 30.5 },
-    { name: 'Phuket', country: 'TH', taxRate: 30.5 },
-    { name: 'Cancun', country: 'MX', taxRate: 26.5 }
+    { name: 'Bangkok', country: 'TH', taxRate: 20 },
+    { name: 'Phuket', country: 'TH', taxRate: 20 },
+    { name: 'Cancun', country: 'MX', taxRate: 20 }
 ];
 
 // Weather icon mapping
@@ -39,6 +39,7 @@ let weatherData = [];
 let idealTemp = 30;
 let carouselInterval = null;
 let currentOffset = 0;
+let isMobile = window.innerWidth <= 768;
 
 // Initialize app
 document.addEventListener('DOMContentLoaded', () => {
@@ -49,6 +50,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Update times every second
     setInterval(updateAllTimes, 1000);
+
+    // Handle resize
+    window.addEventListener('resize', () => {
+        isMobile = window.innerWidth <= 768;
+    });
 });
 
 // Theme Management
@@ -254,13 +260,11 @@ function calculateTemperatureScore(temp) {
 
     // Below 28°C - linear penalty
     if (temp < 28) {
-        // At 0°C = 0 score, at 28°C = 100 score
         return Math.max(0, (temp / 28) * 100);
     }
 
     // Above 32°C
     if (temp <= 40) {
-        // Linear penalty from 32 to 40
         const penalty = ((temp - 32) / 8) * 100;
         return Math.max(0, 100 - penalty);
     }
@@ -272,8 +276,6 @@ function calculateTemperatureScore(temp) {
 
 // Calculate tax score
 function calculateTaxScore(taxRate) {
-    // Intelligent curve
-    // 0% = 100, 5% = 95, 15% = 80, 30% = 50, 50%+ = 0
     if (taxRate <= 5) {
         return 100 - taxRate;
     } else if (taxRate <= 15) {
@@ -288,19 +290,15 @@ function calculateTaxScore(taxRate) {
 // Get color for score
 function getScoreColor(score) {
     if (score >= 75) {
-        // Green range
         const t = (score - 75) / 25;
         return interpolateColor('#84cc16', '#22c55e', t);
     } else if (score >= 50) {
-        // Yellow to green
         const t = (score - 50) / 25;
         return interpolateColor('#eab308', '#84cc16', t);
     } else if (score >= 25) {
-        // Orange to yellow
         const t = (score - 25) / 25;
         return interpolateColor('#f97316', '#eab308', t);
     } else {
-        // Red to orange
         const t = score / 25;
         return interpolateColor('#ef4444', '#f97316', t);
     }
@@ -360,7 +358,6 @@ function createCityCard(data, rank) {
     const scoreColor = getScoreColor(data.happinessScore);
     const taxColor = getTaxRateColor(data.taxRate);
 
-    // Set CSS variables for gradients
     card.style.setProperty('--card-border-gradient', `linear-gradient(135deg, ${scoreColor}, ${scoreColor})`);
     card.style.setProperty('--card-bg-gradient', `linear-gradient(135deg, ${scoreColor}, ${scoreColor})`);
 
@@ -465,44 +462,48 @@ function createDots() {
 
 // Carousel functionality
 function startCarousel() {
-    // Auto-scroll every 5 seconds
     carouselInterval = setInterval(() => {
         scrollCarousel();
     }, 5000);
 }
 
+function getCardWidth() {
+    if (isMobile) {
+        // Card width + gap (1rem on each side of carousel = 2rem total)
+        return window.innerWidth - 16; // 16px = 1rem padding on each side
+    }
+    return 450 + 32; // desktop card width + gap
+}
+
 function scrollCarousel() {
     const carousel = document.getElementById('weatherCarousel');
-    const cardWidth = 450 + 32; // card width + gap
+    const cardWidth = getCardWidth();
 
-    currentOffset -= cardWidth;
+    currentOffset -= (cardWidth + (isMobile ? 16 : 0)); // Add gap for mobile
     carousel.style.transform = `translateX(${currentOffset}px)`;
 
-    // Check if we've moved past the first card
     setTimeout(() => {
         if (Math.abs(currentOffset) >= cardWidth) {
-            // Remove first card and add to end
             const firstCard = carousel.firstElementChild;
             carousel.appendChild(firstCard);
 
-            // Reset position without animation
             carousel.style.transition = 'none';
-            currentOffset += cardWidth;
+            currentOffset += (cardWidth + (isMobile ? 16 : 0));
             carousel.style.transform = `translateX(${currentOffset}px)`;
 
-            // Re-enable animation
-            setTimeout(() => {
-                carousel.style.transition = 'transform 0.5s ease-out';
-            }, 50);
+            requestAnimationFrame(() => {
+                setTimeout(() => {
+                    carousel.style.transition = 'transform 0.5s ease-out';
+                }, 50);
+            });
         }
     }, 500);
 }
 
 function scrollToCard(index) {
-    // Reset carousel and scroll to specific card
     const carousel = document.getElementById('weatherCarousel');
-    const cardWidth = 450 + 32;
-    currentOffset = -index * cardWidth;
+    const cardWidth = getCardWidth();
+    currentOffset = -index * (cardWidth + (isMobile ? 16 : 0));
     carousel.style.transform = `translateX(${currentOffset}px)`;
     updateDots(index);
 }
