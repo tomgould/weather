@@ -1,10 +1,12 @@
 # 🌍 Where Should I Live - Profile-Based Location Scoring System
 
-A comprehensive, profile-driven location comparison tool that helps you find the perfect place to live based on your personal demographics, lifestyle preferences, and priorities.
+A comprehensive, profile-driven location comparison tool that helps you find the perfect place to live based on your
+personal demographics, lifestyle preferences, and priorities.
 
 ## 🎯 Overview
 
 This application provides personalized location recommendations by:
+
 - **Analyzing 24+ global cities** with comprehensive metrics
 - **Personalizing scores** based on your ethnicity, religion, gender, and preferences
 - **Calculating demographic compatibility** to assess cultural fit and safety
@@ -14,13 +16,16 @@ This application provides personalized location recommendations by:
 ## ✨ Key Features
 
 ### 👤 Comprehensive Profile System
+
 - **Demographics**: Ethnicity, religion, gender, LGBTQ+ status
 - **Lifestyle Preferences**: Cannabis and alcohol attitudes
 - **Custom Weights**: Adjust importance of each factor (tax, weather, safety, etc.)
 - **Save/Load Profiles**: Export and import your profile configurations
 
 ### 📊 Scoring Factors
+
 Each location is scored on:
+
 - **Tax Rate** (0-50%): How much you'll pay
 - **Weather** (Temperature): Proximity to your ideal climate
 - **Cost of Living**: Rent, food, transport, utilities (in GBP)
@@ -32,11 +37,12 @@ Each location is scored on:
 - **Timezone**: Offset from UK
 
 ### 🎨 Advanced Features
+
 - **Demographic Compatibility**: Automatically adjusts scores based on:
-  - Ethnic minority status (penalty if <20% representation)
-  - Religious compatibility (penalty if <30% representation)
-  - LGBTQ+ rights and safety
-  - Women's safety considerations
+    - Ethnic minority status (penalty if <20% representation)
+    - Religious compatibility (penalty if <30% representation)
+    - LGBTQ+ rights and safety
+    - Women's safety considerations
 
 - **Real-time Weather Data**: Current conditions and 6-day forecasts
 - **Interactive UI**: Carousel navigation with keyboard support
@@ -67,6 +73,7 @@ Each location is scored on:
 ## 🚀 Getting Started
 
 ### Quick Start
+
 1. Open `index.html` in your browser
 2. Click **⚙️ Profile** to configure your preferences
 3. Browse through ranked locations
@@ -125,6 +132,7 @@ Or adjust them live in the Profile panel!
 ## 🧮 How Scoring Works
 
 ### Base Scores (0-100 each)
+
 Each city gets scored on individual factors, then weighted:
 
 ```
@@ -134,25 +142,27 @@ Final Score = (Tax × 20%) + (Weather × 15%) + (Cost × 14%) +
 ```
 
 ### Demographic Adjustments
+
 The system applies penalties/adjustments for:
 
 1. **Ethnic Minority Penalty**: If your ethnicity <20% of population
-   - Reduces cultural safety
-   - May reduce healthcare access quality
-   - Up to -15 points total
+    - Reduces cultural safety
+    - May reduce healthcare access quality
+    - Up to -15 points total
 
 2. **Religious Minority Penalty**: If your religion <30% of population
-   - Extra penalty if Islam >50% and you're not Muslim
-   - Up to -10 points
+    - Extra penalty if Islam >50% and you're not Muslim
+    - Up to -10 points
 
 3. **LGBTQ+ Adjustment**: If you identify as LGBTQ+
-   - Scales cultural safety by city's LGBTQ+ friendliness
-   - Reduces police risk in unfriendly locations
+    - Scales cultural safety by city's LGBTQ+ friendliness
+    - Reduces police risk in unfriendly locations
 
 4. **Women's Safety**: If you identify as female
-   - Adjusts cultural safety based on women's safety score
+    - Adjusts cultural safety based on women's safety score
 
 ### Lifestyle Preferences
+
 - **Prefer**: Uses city's actual score (e.g., 80% weed-friendly = 80 points)
 - **Neutral**: Gets default 75 points (no penalty/reward)
 - **Avoid**: Inverts score (e.g., 80% weed-friendly = 20 points)
@@ -160,6 +170,7 @@ The system applies penalties/adjustments for:
 ## 📤 CSV Export
 
 Click **📊 Export CSV** to download a spreadsheet with:
+
 - All city rankings and scores
 - Individual factor breakdowns
 - Cost of living data in GBP
@@ -169,6 +180,7 @@ Click **📊 Export CSV** to download a spreadsheet with:
 ## 🔒 Privacy
 
 All data is stored locally in your browser:
+
 - No data sent to external servers
 - Profile saved in localStorage
 - Weather data from OpenWeatherMap API only
@@ -176,44 +188,54 @@ All data is stored locally in your browser:
 ## 🛠️ Technical Details
 
 ### Dependencies
+
 - **OpenWeatherMap API**: Real-time weather data
 - **Google Fonts**: Inter typeface
 - **Pure Vanilla JS**: No frameworks!
 
 ### Browser Support
+
 - Chrome/Edge (recommended)
 - Firefox
 - Safari
 - Mobile browsers
 
 ### API Configuration
+
 Weather API key is included. To use your own:
+
 1. Get free key at [OpenWeatherMap](https://openweathermap.org/api)
 2. Replace `API_KEY` in `js/data.js`
 
 ## 🎓 Use Cases
 
 ### Personal Migration Planning
+
 Configure your profile and find cities that match your lifestyle and safety needs.
 
 ### Travel Planning
+
 See which cities align with your preferences for extended stays or digital nomading.
 
 ### Comparative Research
+
 Export data to analyze patterns across regions, tax havens, or climate zones.
 
 ### Investment Location Research
+
 Evaluate cities for business expansion or property investment based on multiple factors.
 
 ## 📊 Data Sources
 
 All metrics are estimated and should be verified:
+
 - **Cost of Living**: Based on Numbeo data (November 2025)
 - **Demographics**: Various sources including census data
 - **Safety**: Composite of multiple indices
 - **Weather**: Real-time from OpenWeatherMap
 
-**⚠️ Important**: This tool provides estimates. Always verify critical information from authoritative sources before making life decisions.
+**⚠️ Important**: This tool provides estimates. Always verify critical information from authoritative sources before
+making life decisions.
 
 ## 🤝 Contributing
 
@@ -241,6 +263,7 @@ This project is open source and available under the MIT License.
 ## 🗺️ Roadmap
 
 Future enhancements could include:
+
 - More cities (target: 100+)
 - More factors (infrastructure, internet speed, freedom indices)
 - Visual maps and charts

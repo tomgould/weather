@@ -54,11 +54,11 @@ function getScoreEmoji(score, allScores) {
 // Get kidnap risk display
 function getKidnapRiskDisplay(risk) {
     const displays = {
-        1: { text: 'Low', color: '#22c55e', icon: '✅' },
-        2: { text: 'Moderate', color: '#84cc16', icon: '🟢' },
-        3: { text: 'Medium', color: '#eab308', icon: '⚠️' },
-        4: { text: 'High', color: '#f97316', icon: '🚨' },
-        5: { text: 'Extreme', color: '#ef4444', icon: '🔴' }
+        1: {text: 'Low', color: '#22c55e', icon: '✅'},
+        2: {text: 'Moderate', color: '#84cc16', icon: '🟢'},
+        3: {text: 'Medium', color: '#eab308', icon: '⚠️'},
+        4: {text: 'High', color: '#f97316', icon: '🚨'},
+        5: {text: 'Extreme', color: '#ef4444', icon: '🔴'}
     };
     return displays[risk] || displays[3];
 }
@@ -69,31 +69,51 @@ function getLifestyleDisplay(score, type) {
 
     if (type === 'cannabis') {
         if (score >= 80) {
-            icon = '✅'; text = 'Legal'; color = '#22c55e';
+            icon = '✅';
+            text = 'Legal';
+            color = '#22c55e';
         } else if (score >= 60) {
-            icon = '🟢'; text = 'Friendly'; color = '#84cc16';
+            icon = '🟢';
+            text = 'Friendly';
+            color = '#84cc16';
         } else if (score >= 40) {
-            icon = '⚠️'; text = 'Neutral'; color = '#eab308';
+            icon = '⚠️';
+            text = 'Neutral';
+            color = '#eab308';
         } else if (score >= 20) {
-            icon = '🟠'; text = 'Risky'; color = '#f97316';
+            icon = '🟠';
+            text = 'Risky';
+            color = '#f97316';
         } else {
-            icon = '🚫'; text = 'Illegal'; color = '#ef4444';
+            icon = '🚫';
+            text = 'Illegal';
+            color = '#ef4444';
         }
     } else { // alcohol
         if (score >= 80) {
-            icon = '🍺'; text = 'Widely Available'; color = '#22c55e';
+            icon = '🍺';
+            text = 'Widely Available';
+            color = '#22c55e';
         } else if (score >= 60) {
-            icon = '🍻'; text = 'Available'; color = '#84cc16';
+            icon = '🍻';
+            text = 'Available';
+            color = '#84cc16';
         } else if (score >= 40) {
-            icon = '⚠️'; text = 'Limited'; color = '#eab308';
+            icon = '⚠️';
+            text = 'Limited';
+            color = '#eab308';
         } else if (score >= 20) {
-            icon = '🚫'; text = 'Restricted'; color = '#f97316';
+            icon = '🚫';
+            text = 'Restricted';
+            color = '#f97316';
         } else {
-            icon = '❌'; text = 'Illegal'; color = '#ef4444';
+            icon = '❌';
+            text = 'Illegal';
+            color = '#ef4444';
         }
     }
 
-    return { icon, text, color, percentage: score };
+    return {icon, text, color, percentage: score};
 }
 
 // Get ordinal suffix
@@ -180,8 +200,8 @@ function createCityCard(data, rank, allScores) {
     }).join('');
 
     const forecastHTML = data.forecast.map(day => {
-        const dayName = day.date.toLocaleDateString('en-US', { weekday: 'short' });
-        const dateStr = day.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        const dayName = day.date.toLocaleDateString('en-US', {weekday: 'short'});
+        const dateStr = day.date.toLocaleDateString('en-US', {month: 'short', day: 'numeric'});
         const icon = WEATHER_ICONS[day.icon] || '🌡️';
 
         return `
@@ -256,7 +276,7 @@ function createCityCard(data, rank, allScores) {
         breakdown: `
             <div class="score-breakdown">
                 <h3 class="breakdown-title">Score Breakdown</h3>
-                <div class="breakdown-note">Corruption (10%) always applies. Kidnap risk penalty: ${kidnap.text}</div>
+                <div class="breakdown-note">Corruption (${CORRUPTION_WEIGHT_PERCENT}%) always applies. Kidnap risk penalty: ${kidnap.text}</div>
                 <div class="breakdown-grid">
                     <div class="breakdown-item">
                         <div class="breakdown-label">
@@ -326,16 +346,16 @@ function createCityCard(data, rank, allScores) {
         `,
         corruption: `
             <div class="demographics-section">
-                <h3 class="demographics-title">⚖️ Corruption Level (Always 10% of Score)</h3>
+                <h3 class="demographics-title">⚖️ Corruption Level</h3>
                 <div class="corruption-display">
                     <div class="corruption-score-large" style="color: ${corruptionColor}">
                         ${corruptionDisplayScore}/100
                     </div>
                     <div class="corruption-description">
                         ${corruptionDisplayScore >= 80 ? 'Very High Corruption' :
-                          corruptionDisplayScore >= 60 ? 'High Corruption' :
-                          corruptionDisplayScore >= 40 ? 'Moderate Corruption' :
-                          corruptionDisplayScore >= 20 ? 'Low Corruption' : 'Very Low Corruption'}
+            corruptionDisplayScore >= 60 ? 'High Corruption' :
+                corruptionDisplayScore >= 40 ? 'Moderate Corruption' :
+                    corruptionDisplayScore >= 20 ? 'Low Corruption' : 'Very Low Corruption'}
                     </div>
                     <div class="corruption-note">CPI Score: ${data.corruption}/100 (Transparency International 2024)</div>
                 </div>
@@ -463,4 +483,3 @@ function createCityCard(data, rank, allScores) {
         </div>
     `;
 }
-

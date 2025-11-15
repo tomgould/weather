@@ -1,3 +1,17 @@
+// ==========================================
+// CONFIGURATION: Adjust scoring impact
+// ==========================================
+// Change this value to adjust how much corruption affects the total score
+// Current: 5% (was 10% previously)
+const CORRUPTION_WEIGHT_PERCENT = 5;
+
+// Multipliers for safety factors (higher = more impact from bad scores)
+// Default: 1.0 = normal impact
+// Increase to 1.5 or 2.0 to make poor safety scores penalize more heavily
+const WAR_RISK_MULTIPLIER = 50;
+const TERRORISM_RISK_MULTIPLIER = 25;
+const CULTURAL_SAFETY_MULTIPLIER = 2;
+
 // All scoring algorithms with profile integration
 
 // Helper: Get ethnicity category percentages
@@ -89,7 +103,8 @@ function calculateDemographicPenalty(city, profile) {
 
 // Apply demographic adjustments to safety scores
 function adjustSafetyForDemographics(city, profile) {
-    const adjusted = { ...city.safety,
+    const adjusted = {
+        ...city.safety,
         quality: city.healthcare.quality,
         policeRisk: city.policeRisk
     };
@@ -138,7 +153,7 @@ function adjustSafetyForDemographics(city, profile) {
 // Calculate average temperature from forecast and score it
 function calculateForecastTemperatureScore(forecast, idealTemp) {
     if (!forecast || forecast.length === 0) {
-        return { score: 50, avgTemp: idealTemp }; // Fallback
+        return {score: 50, avgTemp: idealTemp}; // Fallback
     }
 
     // Collect all min and max temps from forecast
@@ -160,7 +175,7 @@ function calculateForecastTemperatureScore(forecast, idealTemp) {
     // Calculate average score
     const avgScore = allScores.reduce((sum, score) => sum + score, 0) / allScores.length;
 
-    return { score: avgScore, avgTemp: avgTemp };
+    return {score: avgScore, avgTemp: avgTemp};
 }
 
 // Calculate temperature score for a single temperature value
@@ -183,7 +198,7 @@ function calculateTaxScore(taxRate) {
     return Math.max(0, 50 - ((taxRate - 30) * 2.5));
 }
 
-// Calculate corruption score (CPI: 0-100, higher is better) - always contributes 10%
+// Calculate corruption score (CPI: 0-100, higher is better) - uses CORRUPTION_WEIGHT_PERCENT
 function calculateCorruptionScore(cpiScore) {
     return cpiScore || 50; // Direct use of CPI score
 }
@@ -195,10 +210,25 @@ function calculateTimezoneScore(hoursDifference) {
     return Math.round(100 - (absHours / 12 * 100));
 }
 
-// Calculate safety score with demographic adjustments
+// Calculate safety score with demographic adjustments and multipliers
 function calculateSafetyScore(city, profile) {
     const adjusted = adjustSafetyForDemographics(city, profile);
-    return Math.round((adjusted.war + adjusted.terrorism + adjusted.cultural) / 3);
+
+    // All three scores are already in "safety" format where higher = safer
+    // Apply multipliers to amplify the impact of both good and bad scores
+    const warScore = adjusted.war >= 50
+        ? Math.min(100, adjusted.war * WAR_RISK_MULTIPLIER)
+        : Math.max(0, adjusted.war / WAR_RISK_MULTIPLIER);
+
+    const terrorismScore = adjusted.terrorism >= 50
+        ? Math.min(100, adjusted.terrorism * TERRORISM_RISK_MULTIPLIER)
+        : Math.max(0, adjusted.terrorism / TERRORISM_RISK_MULTIPLIER);
+
+    const culturalScore = adjusted.cultural >= 50
+        ? Math.min(100, adjusted.cultural * CULTURAL_SAFETY_MULTIPLIER)
+        : Math.max(0, adjusted.cultural / CULTURAL_SAFETY_MULTIPLIER);
+
+    return Math.round((warScore + terrorismScore + culturalScore) / 3);
 }
 
 // Calculate healthcare score with demographic adjustments
@@ -259,9 +289,9 @@ function convertToGBP(amount, currency, exchangeRate) {
 
 // Get UK timezone offset
 function getUKTimezoneOffset() {
-    const ukTime = new Date().toLocaleString('en-US', { timeZone: 'Europe/London' });
+    const ukTime = new Date().toLocaleString('en-US', {timeZone: 'Europe/London'});
     const ukDate = new Date(ukTime);
-    const utcTime = new Date().toLocaleString('en-US', { timeZone: 'UTC' });
+    const utcTime = new Date().toLocaleString('en-US', {timeZone: 'UTC'});
     const utcDate = new Date(utcTime);
     return (ukDate - utcDate) / 1000;
 }
@@ -288,15 +318,15 @@ function formatTimezoneOffset(hours) {
 // Get section ordering based on weights - keep weather items together
 function getSectionOrder(weights) {
     const sections = [
-        { name: 'breakdown', weight: 100 }, // Always show breakdown first
-        { name: 'weatherGroup', weight: weights.weather }, // Weather + Forecast together
-        { name: 'lifestyle', weight: Math.max(weights.cannabis, weights.alcohol) },
-        { name: 'corruption', weight: 50 }, // Fixed mid-priority (not weighted by user)
-        { name: 'safety', weight: weights.safety },
-        { name: 'healthcare', weight: weights.healthcare },
-        { name: 'cost', weight: weights.costOfLiving },
-        { name: 'religion', weight: 0 }, // Demographics lower priority
-        { name: 'ethnicity', weight: 0 }
+        {name: 'breakdown', weight: 100}, // Always show breakdown first
+        {name: 'weatherGroup', weight: weights.weather}, // Weather + Forecast together
+        {name: 'lifestyle', weight: Math.max(weights.cannabis, weights.alcohol)},
+        {name: 'corruption', weight: 50}, // Fixed mid-priority (not weighted by user)
+        {name: 'safety', weight: weights.safety},
+        {name: 'healthcare', weight: weights.healthcare},
+        {name: 'cost', weight: weights.costOfLiving},
+        {name: 'religion', weight: 0}, // Demographics lower priority
+        {name: 'ethnicity', weight: 0}
     ];
 
     return sections.sort((a, b) => b.weight - a.weight).map(s => s.name);
@@ -306,7 +336,7 @@ function getSectionOrder(weights) {
 function calculateHappinessScore(city, profile, allCities) {
     const weights = profile.weights;
 
-    // Ensure all weights exist with defaults (corruption removed)
+    // Ensure all weights exist with defaults (corruption removed from user weights)
     const safeWeights = {
         tax: weights.tax || 0,
         weather: weights.weather || 0,
@@ -350,7 +380,7 @@ function calculateHappinessScore(city, profile, allCities) {
     city.alcoholScore = alcoholScore;
     city.timezoneOffsetHours = timezoneOffsetHours;
 
-    // Calculate weighted score (user-weighted factors = 90% of score)
+    // Calculate weighted score (user-weighted factors = (100 - CORRUPTION_WEIGHT_PERCENT)% of score)
     const totalWeight = Object.values(safeWeights).reduce((sum, w) => sum + w, 0);
 
     // Prevent division by zero
@@ -370,8 +400,10 @@ function calculateHappinessScore(city, profile, allCities) {
         (timezoneScore * safeWeights.timezone)
     ) / totalWeight;
 
-    // Combine: 90% weighted factors + 10% corruption (always)
-    const baseScore = (weightedScore * 0.9) + (corruptionScore * 0.1);
+    // Combine: (100-CORRUPTION_WEIGHT_PERCENT)% weighted factors + CORRUPTION_WEIGHT_PERCENT% corruption (always)
+    const userFactorsPercent = (100 - CORRUPTION_WEIGHT_PERCENT) / 100;
+    const corruptionPercent = CORRUPTION_WEIGHT_PERCENT / 100;
+    const baseScore = (weightedScore * userFactorsPercent) + (corruptionScore * corruptionPercent);
 
     // Apply demographic penalty
     const demographicPenalty = calculateDemographicPenalty(city, profile);
@@ -381,4 +413,3 @@ function calculateHappinessScore(city, profile, allCities) {
 
     return Math.round(Math.max(0, baseScore - demographicPenalty - kidnapPenalty));
 }
-

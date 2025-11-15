@@ -4,7 +4,7 @@ const CITIES = [
         name: 'London',
         country: 'GB',
         corruption: 71,
-        kidnapRisk: 1, // 1=Low, 2=Moderate, 3=Medium, 4=High, 5=Extreme
+        kidnapRisk: 2, // Updated from PDF: Moderate
         taxRate: 50,
         weedFriendly: 50,
         alcoholFriendly: 95,
@@ -35,7 +35,7 @@ const CITIES = [
         name: 'Tbilisi',
         country: 'GE',
         corruption: 56,
-        kidnapRisk: 3,
+        kidnapRisk: 3, // Confirmed from PDF: Medium
         taxRate: 1,
         weedFriendly: 70,
         alcoholFriendly: 100,
@@ -67,7 +67,7 @@ const CITIES = [
         name: 'Paphos',
         country: 'CY',
         corruption: 57,
-        kidnapRisk: 2,
+        kidnapRisk: 3, // Updated from PDF: Medium
         taxRate: 12.5,
         weedFriendly: 60,
         alcoholFriendly: 95,
@@ -99,7 +99,7 @@ const CITIES = [
         name: 'Bangkok',
         country: 'TH',
         corruption: 39,
-        kidnapRisk: 3,
+        kidnapRisk: 3, // Confirmed from PDF: Medium
         taxRate: 30.5,
         weedFriendly: 80,
         alcoholFriendly: 90,
@@ -131,7 +131,7 @@ const CITIES = [
         name: 'Phuket',
         country: 'TH',
         corruption: 39,
-        kidnapRisk: 3,
+        kidnapRisk: 3, // Confirmed from PDF: Medium
         taxRate: 30.5,
         weedFriendly: 80,
         alcoholFriendly: 90,
@@ -163,7 +163,7 @@ const CITIES = [
         name: 'Cancun',
         country: 'MX',
         corruption: 31,
-        kidnapRisk: 4,
+        kidnapRisk: 4, // Confirmed from PDF: High
         taxRate: 26.5,
         weedFriendly: 70,
         alcoholFriendly: 95,
@@ -195,7 +195,7 @@ const CITIES = [
         name: 'Marbella',
         country: 'ES',
         corruption: 60,
-        kidnapRisk: 1,
+        kidnapRisk: 2, // Updated from PDF: Moderate
         taxRate: 43,
         weedFriendly: 65,
         alcoholFriendly: 100,
@@ -227,7 +227,7 @@ const CITIES = [
         name: 'Lisbon',
         country: 'PT',
         corruption: 63,
-        kidnapRisk: 1,
+        kidnapRisk: 2, // Updated from PDF: Moderate
         taxRate: 46,
         weedFriendly: 90,
         alcoholFriendly: 100,
@@ -259,7 +259,7 @@ const CITIES = [
         name: 'Dubai',
         country: 'AE',
         corruption: 68,
-        kidnapRisk: 3,
+        kidnapRisk: 2, // Updated from PDF: Moderate
         taxRate: 0,
         weedFriendly: 0,
         alcoholFriendly: 20,
@@ -291,7 +291,7 @@ const CITIES = [
         name: 'Longyearbyen',
         country: 'NO',
         corruption: 84,
-        kidnapRisk: 1,
+        kidnapRisk: 1, // Confirmed from PDF: Low
         taxRate: 38,
         weedFriendly: 50,
         alcoholFriendly: 85,
@@ -323,7 +323,7 @@ const CITIES = [
         name: 'Copenhagen',
         country: 'DK',
         corruption: 90,
-        kidnapRisk: 1,
+        kidnapRisk: 2, // Updated from PDF: Moderate
         taxRate: 42,
         weedFriendly: 85,
         alcoholFriendly: 100,
@@ -355,7 +355,7 @@ const CITIES = [
         name: 'Reykjavik',
         country: 'IS',
         corruption: 72,
-        kidnapRisk: 1,
+        kidnapRisk: 1, // Confirmed from PDF: Low
         taxRate: 40,
         weedFriendly: 70,
         alcoholFriendly: 90,
@@ -387,7 +387,7 @@ const CITIES = [
         name: 'Ulaanbaatar',
         country: 'MN',
         corruption: 35,
-        kidnapRisk: 3,
+        kidnapRisk: 2, // Updated from PDF: Moderate
         taxRate: 20,
         weedFriendly: 30,
         alcoholFriendly: 95,
@@ -419,7 +419,7 @@ const CITIES = [
         name: 'Moscow',
         country: 'RU',
         corruption: 26,
-        kidnapRisk: 4,
+        kidnapRisk: 4, // Confirmed from PDF: High
         taxRate: 13,
         weedFriendly: 20,
         alcoholFriendly: 95,
@@ -451,7 +451,7 @@ const CITIES = [
         name: 'Kyiv',
         country: 'UA',
         corruption: 36,
-        kidnapRisk: 3,
+        kidnapRisk: 3, // Confirmed from PDF: Medium
         taxRate: 19.5,
         weedFriendly: 40,
         alcoholFriendly: 95,
@@ -483,7 +483,7 @@ const CITIES = [
         name: 'Warsaw',
         country: 'PL',
         corruption: 54,
-        kidnapRisk: 2,
+        kidnapRisk: 2, // Confirmed from PDF: Moderate
         taxRate: 28,
         weedFriendly: 45,
         alcoholFriendly: 100,
@@ -515,7 +515,7 @@ const CITIES = [
         name: 'New York',
         country: 'US',
         corruption: 69,
-        kidnapRisk: 2,
+        kidnapRisk: 2, // Confirmed from PDF: Moderate
         taxRate: 35,
         weedFriendly: 90,
         alcoholFriendly: 100,
@@ -546,7 +546,7 @@ const CITIES = [
         name: 'Los Angeles',
         country: 'US',
         corruption: 69,
-        kidnapRisk: 2,
+        kidnapRisk: 2, // Confirmed from PDF: Moderate
         taxRate: 33,
         weedFriendly: 100,
         alcoholFriendly: 100,
@@ -577,7 +577,7 @@ const CITIES = [
         name: 'Toronto',
         country: 'CA',
         corruption: 77,
-        kidnapRisk: 2,
+        kidnapRisk: 2, // Confirmed from PDF: Moderate
         taxRate: 36,
         weedFriendly: 100,
         alcoholFriendly: 100,
@@ -609,7 +609,7 @@ const CITIES = [
         name: 'Melbourne',
         country: 'AU',
         corruption: 75,
-        kidnapRisk: 1,
+        kidnapRisk: 2, // Updated from PDF: Moderate
         taxRate: 39,
         weedFriendly: 80,
         alcoholFriendly: 100,
@@ -641,7 +641,7 @@ const CITIES = [
         name: 'Cairo',
         country: 'EG',
         corruption: 30,
-        kidnapRisk: 4,
+        kidnapRisk: 3, // Updated from PDF: Medium
         taxRate: 23,
         weedFriendly: 10,
         alcoholFriendly: 40,
@@ -673,7 +673,7 @@ const CITIES = [
         name: 'Cape Town',
         country: 'ZA',
         corruption: 41,
-        kidnapRisk: 4,
+        kidnapRisk: 4, // Confirmed from PDF: High
         taxRate: 38,
         weedFriendly: 60,
         alcoholFriendly: 95,
@@ -705,7 +705,7 @@ const CITIES = [
         name: 'Nairobi',
         country: 'KE',
         corruption: 29,
-        kidnapRisk: 5,
+        kidnapRisk: 3, // Updated from PDF: Medium
         taxRate: 30,
         weedFriendly: 40,
         alcoholFriendly: 85,
@@ -737,7 +737,7 @@ const CITIES = [
         name: 'Lagos',
         country: 'NG',
         corruption: 25,
-        kidnapRisk: 5,
+        kidnapRisk: 5, // Confirmed from PDF: Extreme
         taxRate: 20,
         weedFriendly: 30,
         alcoholFriendly: 60,
@@ -779,4 +779,3 @@ const WEATHER_ICONS = {
 // API Configuration
 const API_KEY = '9c0e09a72bb01808057ddd72e429269a';
 const API_BASE = 'https://api.openweathermap.org/data/2.5';
-

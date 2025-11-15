@@ -44,10 +44,10 @@ class UserProfile {
                 if (savedProfile.weights) {
                     // Remove corruption if it exists in old profiles
                     delete savedProfile.weights.corruption;
-                    savedProfile.weights = { ...defaults.weights, ...savedProfile.weights };
+                    savedProfile.weights = {...defaults.weights, ...savedProfile.weights};
                 }
 
-                this.profile = { ...defaults, ...savedProfile };
+                this.profile = {...defaults, ...savedProfile};
             } catch (e) {
                 console.error('Error loading profile:', e);
             }
@@ -59,7 +59,7 @@ class UserProfile {
     }
 
     update(updates) {
-        this.profile = { ...this.profile, ...updates };
+        this.profile = {...this.profile, ...updates};
         this.save();
     }
 
@@ -70,7 +70,7 @@ class UserProfile {
 
     exportProfile() {
         const dataStr = JSON.stringify(this.profile, null, 2);
-        const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+        const dataUri = 'data:application/json;charset=utf-8,' + encodeURIComponent(dataStr);
         const exportFileDefaultName = 'my-profile.json';
 
         const linkElement = document.createElement('a');
@@ -88,10 +88,10 @@ class UserProfile {
             if (imported.weights) {
                 // Remove corruption if it exists
                 delete imported.weights.corruption;
-                imported.weights = { ...defaults.weights, ...imported.weights };
+                imported.weights = {...defaults.weights, ...imported.weights};
             }
 
-            this.profile = { ...defaults, ...imported };
+            this.profile = {...defaults, ...imported};
             this.save();
             return true;
         } catch (e) {

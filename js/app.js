@@ -187,7 +187,7 @@ function updateWeightTotal() {
 function initIdealTempControl() {
     const input = document.getElementById('idealTemp');
     input.addEventListener('change', () => {
-        userProfile.update({ idealTemp: parseInt(input.value) });
+        userProfile.update({idealTemp: parseInt(input.value)});
         recalculateAndRender();
     });
 }
@@ -462,11 +462,11 @@ const carousel = document.getElementById('weatherCarousel');
 carousel.addEventListener('touchstart', (e) => {
     touchStartX = e.changedTouches[0].screenX;
     touchStartY = e.changedTouches[0].screenY;
-}, { passive: true });
+}, {passive: true});
 
 carousel.addEventListener('touchend', (e) => {
     touchEndX = e.changedTouches[0].screenX;
     touchEndY = e.changedTouches[0].screenY;
     handleSwipe();
-}, { passive: true });
+}, {passive: true});
 
