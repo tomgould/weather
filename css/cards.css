@@ -575,3 +575,38 @@
     color: var(--text-secondary);
     text-transform: capitalize;
 }
+
+/* Corruption display styles */
+/* Corruption display styles */
+.corruption-display {
+    text-align: center;
+    padding: 1.5rem;
+}
+
+.corruption-score-large {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+}
+
+.corruption-description {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+}
+
+.corruption-note {
+    font-size: 0.85rem;
+    color: var(--text-tertiary);
+    font-style: italic;
+}
+
+/* Spacing between sections */
+.forecast-section {
+    margin-top: 1.5rem;
+}
+
+.lifestyle-indicators {
+    margin-top: 1.5rem;
+}

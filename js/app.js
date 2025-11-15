@@ -60,7 +60,7 @@ function initProfilePanel() {
     });
 
     // Weight sliders
-    const weightSliders = ['tax', 'weather', 'cost', 'safety', 'healthcare', 'cannabis', 'police', 'alcohol', 'timezone'];
+    const weightSliders = ['tax', 'weather', 'cost', 'safety', 'healthcare', 'police', 'alcohol', 'cannabis', 'timezone', 'corruption'];
     weightSliders.forEach(name => {
         const slider = document.getElementById(`${name}Weight`);
         const valueDisplay = document.getElementById(`${name}WeightValue`);
@@ -123,8 +123,8 @@ function loadProfileToUI() {
     document.getElementById('religion').value = profile.religion;
     document.getElementById('gender').value = profile.gender;
     document.getElementById('lgbtq').checked = profile.lgbtq;
-    document.getElementById('cannabisPreference').value = profile.cannabisPreference;
     document.getElementById('alcoholPreference').value = profile.alcoholPreference;
+    document.getElementById('cannabisPreference').value = profile.cannabisPreference;
     document.getElementById('idealTemp').value = profile.idealTemp;
 
     // Load weights
@@ -147,8 +147,8 @@ function saveProfileFromUI() {
         religion: document.getElementById('religion').value,
         gender: document.getElementById('gender').value,
         lgbtq: document.getElementById('lgbtq').checked,
-        cannabisPreference: document.getElementById('cannabisPreference').value,
         alcoholPreference: document.getElementById('alcoholPreference').value,
+        cannabisPreference: document.getElementById('cannabisPreference').value,
         idealTemp: parseInt(document.getElementById('idealTemp').value),
         weights: {
             tax: parseInt(document.getElementById('taxWeight').value),
@@ -156,10 +156,11 @@ function saveProfileFromUI() {
             costOfLiving: parseInt(document.getElementById('costWeight').value),
             safety: parseInt(document.getElementById('safetyWeight').value),
             healthcare: parseInt(document.getElementById('healthcareWeight').value),
-            cannabis: parseInt(document.getElementById('cannabisWeight').value),
             policeRisk: parseInt(document.getElementById('policeWeight').value),
             alcohol: parseInt(document.getElementById('alcoholWeight').value),
-            timezone: parseInt(document.getElementById('timezoneWeight').value)
+            cannabis: parseInt(document.getElementById('cannabisWeight').value),
+            timezone: parseInt(document.getElementById('timezoneWeight').value),
+            corruption: parseInt(document.getElementById('corruptionWeight').value)
         }
     };
 
@@ -167,7 +168,7 @@ function saveProfileFromUI() {
 }
 
 function updateWeightTotal() {
-    const total = ['tax', 'weather', 'cost', 'safety', 'healthcare', 'cannabis', 'police', 'alcohol', 'timezone']
+    const total = ['tax', 'weather', 'cost', 'safety', 'healthcare', 'police', 'alcohol', 'cannabis', 'timezone', 'corruption']
         .reduce((sum, name) => {
             const slider = document.getElementById(`${name}Weight`);
             return sum + parseInt(slider.value);
@@ -360,8 +361,11 @@ function renderCards() {
     const carousel = document.getElementById('weatherCarousel');
     carousel.innerHTML = '';
 
+    // Get all scores for emoji calculation
+    const allScores = weatherData.map(d => d.happinessScore);
+
     weatherData.forEach((data, index) => {
-        const cardHTML = createCityCard(data, index + 1);
+        const cardHTML = createCityCard(data, index + 1, allScores);
         const tempDiv = document.createElement('div');
         tempDiv.innerHTML = cardHTML;
         carousel.appendChild(tempDiv.firstElementChild);
@@ -466,3 +470,4 @@ carousel.addEventListener('touchend', (e) => {
     touchEndY = e.changedTouches[0].screenY;
     handleSwipe();
 }, { passive: true });
+

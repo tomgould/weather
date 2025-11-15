@@ -170,6 +170,11 @@ function calculateTaxScore(taxRate) {
     return Math.max(0, 50 - ((taxRate - 30) * 2.5));
 }
 
+// Calculate corruption score (CPI: 0-100, higher is better)
+function calculateCorruptionScore(cpiScore) {
+    return cpiScore || 50; // Default to 50 if undefined
+}
+
 // Calculate timezone score
 function calculateTimezoneScore(hoursDifference) {
     const absHours = Math.abs(hoursDifference);
@@ -267,9 +272,40 @@ function formatTimezoneOffset(hours) {
     return `${sign}${wholeHours}h ${minutes}m from UK`;
 }
 
+// Get section ordering based on weights - keep weather items together
+function getSectionOrder(weights) {
+    const sections = [
+        { name: 'breakdown', weight: 100 }, // Always show breakdown first
+        { name: 'weatherGroup', weight: weights.weather }, // Weather + Forecast together
+        { name: 'lifestyle', weight: Math.max(weights.cannabis, weights.alcohol) },
+        { name: 'corruption', weight: weights.corruption },
+        { name: 'safety', weight: weights.safety },
+        { name: 'healthcare', weight: weights.healthcare },
+        { name: 'cost', weight: weights.costOfLiving },
+        { name: 'religion', weight: 0 }, // Demographics lower priority
+        { name: 'ethnicity', weight: 0 }
+    ];
+
+    return sections.sort((a, b) => b.weight - a.weight).map(s => s.name);
+}
+
 // Main scoring function
 function calculateHappinessScore(city, profile, allCities) {
     const weights = profile.weights;
+
+    // Ensure all weights exist with defaults
+    const safeWeights = {
+        tax: weights.tax || 0,
+        weather: weights.weather || 0,
+        costOfLiving: weights.costOfLiving || 0,
+        safety: weights.safety || 0,
+        healthcare: weights.healthcare || 0,
+        cannabis: weights.cannabis || 0,
+        policeRisk: weights.policeRisk || 0,
+        alcohol: weights.alcohol || 0,
+        timezone: weights.timezone || 0,
+        corruption: weights.corruption || 0
+    };
 
     // Calculate forecast-based temperature score
     const forecastTempResult = calculateForecastTemperatureScore(city.forecast, profile.idealTemp);
@@ -278,6 +314,7 @@ function calculateHappinessScore(city, profile, allCities) {
 
     // Calculate other scores
     const taxScore = calculateTaxScore(city.taxRate);
+    const corruptionScore = calculateCorruptionScore(city.corruption);
     const timezoneOffsetHours = getTimezoneOffsetFromUK(city.timezone);
     const timezoneScore = calculateTimezoneScore(timezoneOffsetHours);
     const costScore = calculateCostOfLivingScore(city, allCities);
@@ -289,8 +326,9 @@ function calculateHappinessScore(city, profile, allCities) {
 
     // Store individual scores
     city.tempScore = tempScore;
-    city.avgTemp = avgTemp; // Store calculated average temperature
+    city.avgTemp = avgTemp;
     city.taxScore = taxScore;
+    city.corruptionScore = corruptionScore;
     city.timezoneScore = timezoneScore;
     city.costScore = costScore;
     city.safetyScore = safetyScore;
@@ -301,17 +339,24 @@ function calculateHappinessScore(city, profile, allCities) {
     city.timezoneOffsetHours = timezoneOffsetHours;
 
     // Calculate weighted score (normalized to 100)
-    const totalWeight = Object.values(weights).reduce((sum, w) => sum + w, 0);
+    const totalWeight = Object.values(safeWeights).reduce((sum, w) => sum + w, 0);
+
+    // Prevent division by zero
+    if (totalWeight === 0) {
+        return 50; // Default neutral score
+    }
+
     const baseScore = (
-        (taxScore * weights.tax) +
-        (tempScore * weights.weather) +
-        (costScore * weights.costOfLiving) +
-        (safetyScore * weights.safety) +
-        (healthcareScore * weights.healthcare) +
-        (cannabisScore * weights.cannabis) +
-        (policeScore * weights.policeRisk) +
-        (alcoholScore * weights.alcohol) +
-        (timezoneScore * weights.timezone)
+        (taxScore * safeWeights.tax) +
+        (tempScore * safeWeights.weather) +
+        (costScore * safeWeights.costOfLiving) +
+        (safetyScore * safeWeights.safety) +
+        (healthcareScore * safeWeights.healthcare) +
+        (cannabisScore * safeWeights.cannabis) +
+        (policeScore * safeWeights.policeRisk) +
+        (alcoholScore * safeWeights.alcohol) +
+        (timezoneScore * safeWeights.timezone) +
+        (corruptionScore * safeWeights.corruption)
     ) / totalWeight * 100;
 
     // Apply demographic penalty

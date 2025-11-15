@@ -34,17 +34,21 @@ function getScoreColor(score) {
     }
 }
 
-// Get emoji for score
-function getScoreEmoji(score) {
-    if (score >= 90) return '😍';
-    if (score >= 80) return '😊';
-    if (score >= 70) return '🙂';
-    if (score >= 60) return '😐';
-    if (score >= 50) return '😕';
-    if (score >= 40) return '😟';
-    if (score >= 30) return '😢';
-    if (score >= 20) return '😭';
-    return '😡';
+// Get emoji based on percentile ranking
+function getScoreEmoji(score, allScores) {
+    // Sort scores to calculate percentile
+    const sortedScores = [...allScores].sort((a, b) => b - a);
+    const rank = sortedScores.indexOf(score);
+    const percentile = (1 - rank / sortedScores.length) * 100;
+
+    if (percentile >= 90) return '😍';
+    if (percentile >= 75) return '😊';
+    if (percentile >= 60) return '🙂';
+    if (percentile >= 40) return '😐';
+    if (percentile >= 25) return '😕';
+    if (percentile >= 15) return '😟';
+    if (percentile >= 5) return '😢';
+    return '😭';
 }
 
 // Get lifestyle indicator display
@@ -95,6 +99,16 @@ function getTaxRateColor(rate) {
     return '#ef4444';
 }
 
+// Get corruption color - inverted (lower CPI = higher corruption score = red)
+function getCorruptionColor(corruptionScore) {
+    // corruptionScore is inverted (100 - CPI), so high score = high corruption
+    if (corruptionScore >= 80) return '#ef4444'; // Very corrupt = red
+    if (corruptionScore >= 60) return '#f97316';
+    if (corruptionScore >= 40) return '#eab308';
+    if (corruptionScore >= 20) return '#84cc16';
+    return '#22c55e'; // Very clean = green
+}
+
 // Format currency
 function formatCurrency(amount, currency) {
     const symbols = {
@@ -128,10 +142,15 @@ function createBarChart(data, maxEntries = 5) {
 }
 
 // Create city card
-function createCityCard(data, rank) {
+function createCityCard(data, rank, allScores) {
     const scoreColor = getScoreColor(data.happinessScore);
     const taxColor = getTaxRateColor(data.taxRate);
-    const scoreEmoji = getScoreEmoji(data.happinessScore);
+
+    // Calculate inverted corruption score for display (higher = more corrupt)
+    const corruptionDisplayScore = 100 - data.corruption;
+    const corruptionColor = getCorruptionColor(corruptionDisplayScore);
+
+    const scoreEmoji = getScoreEmoji(data.happinessScore, allScores);
     const weedDisplay = getLifestyleDisplay(data.weedFriendly, 'cannabis');
     const alcoholDisplay = getLifestyleDisplay(data.alcoholFriendly, 'alcohol');
     const profile = userProfile.profile;
@@ -167,38 +186,9 @@ function createCityCard(data, rank) {
         `;
     }).join('');
 
-    return `
-        <div class="city-card" data-timezone="${data.timezone}">
-            <div class="rank-badge">${getOrdinal(rank)}</div>
-            <div class="happiness-score">
-                <div class="score-value">
-                    <span class="score-number">${data.happinessScore}</span>
-                    <span class="score-emoji">${scoreEmoji}</span>
-                </div>
-                <div class="score-label">Score: ${data.happinessScore}</div>
-            </div>
-
-            <div class="city-header">
-                <div class="city-info">
-                    <h2>${data.city}, ${data.country}</h2>
-                    <div class="city-time">
-                        <span>🕐</span>
-                        <span class="time-display">--:--:--</span>
-                    </div>
-                    <div class="timezone-offset">
-                        <span>🌍</span>
-                        <span>${formatTimezoneOffset(data.timezoneOffsetHours)}</span>
-                    </div>
-                </div>
-                <div class="tax-badge" style="background-color: ${taxColor}">
-                    <div class="tax-icon">💰</div>
-                    <div class="tax-info">
-                        <div class="tax-rate">${data.taxRate}%</div>
-                        <div class="tax-label">Tax Rate</div>
-                    </div>
-                </div>
-            </div>
-
+    // Define all sections with their HTML
+    const sections = {
+        weatherGroup: `
             <div class="weather-summary">
                 <div class="weather-icon">${WEATHER_ICONS[data.current.icon] || '🌡️'}</div>
                 <div class="weather-info">
@@ -230,17 +220,26 @@ function createCityCard(data, rank) {
                 </div>
             </div>
 
-            <div class="lifestyle-indicators">
-                <div class="lifestyle-indicator" style="background-color: ${weedDisplay.color}">
-                    <span class="lifestyle-icon">${weedDisplay.icon}</span>
-                    <span class="lifestyle-text">Cannabis: ${weedDisplay.text} (${weedDisplay.percentage}%)</span>
+            <div class="forecast-section">
+                <h3 class="forecast-title">${data.forecast.length}-Day Forecast</h3>
+                <div class="forecast-grid">
+                    ${forecastHTML}
                 </div>
+            </div>
+        `,
+        lifestyle: `
+            <div class="lifestyle-indicators">
                 <div class="lifestyle-indicator" style="background-color: ${alcoholDisplay.color}">
                     <span class="lifestyle-icon">${alcoholDisplay.icon}</span>
                     <span class="lifestyle-text">Alcohol: ${alcoholDisplay.text} (${alcoholDisplay.percentage}%)</span>
                 </div>
+                <div class="lifestyle-indicator" style="background-color: ${weedDisplay.color}">
+                    <span class="lifestyle-icon">${weedDisplay.icon}</span>
+                    <span class="lifestyle-text">Cannabis: ${weedDisplay.text} (${weedDisplay.percentage}%)</span>
+                </div>
             </div>
-
+        `,
+        breakdown: `
             <div class="score-breakdown">
                 <h3 class="breakdown-title">Score Breakdown</h3>
                 <div class="breakdown-grid">
@@ -281,13 +280,6 @@ function createCityCard(data, rank) {
                     </div>
                     <div class="breakdown-item">
                         <div class="breakdown-label">
-                            <span class="breakdown-icon">🌿</span>
-                            <span>Cannabis (${profile.weights.cannabis}%)</span>
-                        </div>
-                        <div class="breakdown-score" style="color: ${getScoreColor(data.cannabisScore)}">${Math.round(data.cannabisScore)}</div>
-                    </div>
-                    <div class="breakdown-item">
-                        <div class="breakdown-label">
                             <span class="breakdown-icon">👮</span>
                             <span>Police (${profile.weights.policeRisk}%)</span>
                         </div>
@@ -302,14 +294,46 @@ function createCityCard(data, rank) {
                     </div>
                     <div class="breakdown-item">
                         <div class="breakdown-label">
+                            <span class="breakdown-icon">🌿</span>
+                            <span>Cannabis (${profile.weights.cannabis}%)</span>
+                        </div>
+                        <div class="breakdown-score" style="color: ${getScoreColor(data.cannabisScore)}">${Math.round(data.cannabisScore)}</div>
+                    </div>
+                    <div class="breakdown-item">
+                        <div class="breakdown-label">
                             <span class="breakdown-icon">🌍</span>
                             <span>Timezone (${profile.weights.timezone}%)</span>
                         </div>
                         <div class="breakdown-score" style="color: ${getScoreColor(data.timezoneScore)}">${Math.round(data.timezoneScore)}</div>
                     </div>
+                    <div class="breakdown-item">
+                        <div class="breakdown-label">
+                            <span class="breakdown-icon">⚖️</span>
+                            <span>Corruption (${profile.weights.corruption}%)</span>
+                        </div>
+                        <div class="breakdown-score" style="color: ${getScoreColor(data.corruptionScore)}">${Math.round(data.corruptionScore)}</div>
+                    </div>
                 </div>
             </div>
-
+        `,
+        corruption: `
+            <div class="demographics-section">
+                <h3 class="demographics-title">⚖️ Corruption Level</h3>
+                <div class="corruption-display">
+                    <div class="corruption-score-large" style="color: ${corruptionColor}">
+                        ${corruptionDisplayScore}/100
+                    </div>
+                    <div class="corruption-description">
+                        ${corruptionDisplayScore >= 80 ? 'Very High Corruption' :
+                          corruptionDisplayScore >= 60 ? 'High Corruption' :
+                          corruptionDisplayScore >= 40 ? 'Moderate Corruption' :
+                          corruptionDisplayScore >= 20 ? 'Low Corruption' : 'Very Low Corruption'}
+                    </div>
+                    <div class="corruption-note">CPI Score: ${data.corruption}/100 (Transparency International 2024)</div>
+                </div>
+            </div>
+        `,
+        safety: `
             <div class="demographics-section">
                 <h3 class="demographics-title">🛡️ Safety Breakdown</h3>
                 <div class="safety-grid">
@@ -336,7 +360,8 @@ function createCityCard(data, rank) {
                     </div>
                 </div>
             </div>
-
+        `,
+        healthcare: `
             <div class="demographics-section">
                 <h3 class="demographics-title">🏥 Healthcare</h3>
                 <div class="healthcare-grid">
@@ -356,35 +381,70 @@ function createCityCard(data, rank) {
                     </div>
                 </div>
             </div>
-
+        `,
+        religion: `
             <div class="demographics-section">
                 <h3 class="demographics-title">🙏 Religion</h3>
                 <div class="bar-chart">
                     ${createBarChart(data.religion)}
                 </div>
             </div>
-
+        `,
+        ethnicity: `
             <div class="demographics-section">
                 <h3 class="demographics-title">👥 Ethnicity</h3>
                 <div class="bar-chart">
                     ${createBarChart(data.ethnicity)}
                 </div>
             </div>
-
+        `,
+        cost: `
             <div class="cost-of-living-section">
                 <h3 class="cost-title">💷 Cost of Living</h3>
                 <div class="cost-grid">
                     ${costItemsHTML}
                 </div>
             </div>
+        `
+    };
 
-            <div class="forecast-section">
-                <h3 class="forecast-title">${data.forecast.length}-Day Forecast</h3>
-                <div class="forecast-grid">
-                    ${forecastHTML}
+    // Get section order based on weights
+    const sectionOrder = getSectionOrder(profile.weights);
+    const orderedSectionsHTML = sectionOrder.map(name => sections[name]).join('');
+
+    return `
+        <div class="city-card" data-timezone="${data.timezone}">
+            <div class="rank-badge">${getOrdinal(rank)}</div>
+            <div class="happiness-score">
+                <div class="score-value">
+                    <span class="score-number">${data.happinessScore}</span>
+                    <span class="score-emoji">${scoreEmoji}</span>
+                </div>
+                <div class="score-label">Score: ${data.happinessScore}</div>
+            </div>
+
+            <div class="city-header">
+                <div class="city-info">
+                    <h2>${data.city}, ${data.country}</h2>
+                    <div class="city-time">
+                        <span>🕐</span>
+                        <span class="time-display">--:--:--</span>
+                    </div>
+                    <div class="timezone-offset">
+                        <span>🌍</span>
+                        <span>${formatTimezoneOffset(data.timezoneOffsetHours)}</span>
+                    </div>
+                </div>
+                <div class="tax-badge" style="background-color: ${taxColor}">
+                    <div class="tax-icon">💰</div>
+                    <div class="tax-info">
+                        <div class="tax-rate">${data.taxRate}%</div>
+                        <div class="tax-label">Tax Rate</div>
+                    </div>
                 </div>
             </div>
+
+            ${orderedSectionsHTML}
         </div>
     `;
 }
-

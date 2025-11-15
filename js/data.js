@@ -3,6 +3,7 @@ const CITIES = [
     {
         name: 'London',
         country: 'GB',
+        corruption: 71,
         taxRate: 50,
         weedFriendly: 50,
         alcoholFriendly: 95,
@@ -32,6 +33,7 @@ const CITIES = [
     {
         name: 'Tbilisi',
         country: 'GE',
+        corruption: 56,
         taxRate: 1,
         weedFriendly: 70,
         alcoholFriendly: 100,
@@ -62,6 +64,7 @@ const CITIES = [
     {
         name: 'Paphos',
         country: 'CY',
+        corruption: 57,
         taxRate: 12.5,
         weedFriendly: 60,
         alcoholFriendly: 95,
@@ -92,6 +95,7 @@ const CITIES = [
     {
         name: 'Bangkok',
         country: 'TH',
+        corruption: 39,
         taxRate: 30.5,
         weedFriendly: 80,
         alcoholFriendly: 90,
@@ -122,6 +126,7 @@ const CITIES = [
     {
         name: 'Phuket',
         country: 'TH',
+        corruption: 39,
         taxRate: 30.5,
         weedFriendly: 80,
         alcoholFriendly: 90,
@@ -152,6 +157,7 @@ const CITIES = [
     {
         name: 'Cancun',
         country: 'MX',
+        corruption: 31,
         taxRate: 26.5,
         weedFriendly: 70,
         alcoholFriendly: 95,
@@ -182,6 +188,7 @@ const CITIES = [
     {
         name: 'Marbella',
         country: 'ES',
+        corruption: 60,
         taxRate: 43,
         weedFriendly: 65,
         alcoholFriendly: 100,
@@ -212,6 +219,7 @@ const CITIES = [
     {
         name: 'Lisbon',
         country: 'PT',
+        corruption: 63,
         taxRate: 46,
         weedFriendly: 90,
         alcoholFriendly: 100,
@@ -242,6 +250,7 @@ const CITIES = [
     {
         name: 'Dubai',
         country: 'AE',
+        corruption: 68,
         taxRate: 0,
         weedFriendly: 0,
         alcoholFriendly: 20,
@@ -272,6 +281,7 @@ const CITIES = [
     {
         name: 'Longyearbyen',
         country: 'NO',
+        corruption: 84,
         taxRate: 38,
         weedFriendly: 50,
         alcoholFriendly: 85,
@@ -302,6 +312,7 @@ const CITIES = [
     {
         name: 'Copenhagen',
         country: 'DK',
+        corruption: 90,
         taxRate: 42,
         weedFriendly: 85,
         alcoholFriendly: 100,
@@ -332,6 +343,7 @@ const CITIES = [
     {
         name: 'Reykjavik',
         country: 'IS',
+        corruption: 72,
         taxRate: 40,
         weedFriendly: 70,
         alcoholFriendly: 90,
@@ -362,6 +374,7 @@ const CITIES = [
     {
         name: 'Ulaanbaatar',
         country: 'MN',
+        corruption: 35,
         taxRate: 20,
         weedFriendly: 30,
         alcoholFriendly: 95,
@@ -392,6 +405,7 @@ const CITIES = [
     {
         name: 'Moscow',
         country: 'RU',
+        corruption: 26,
         taxRate: 13,
         weedFriendly: 20,
         alcoholFriendly: 95,
@@ -422,6 +436,7 @@ const CITIES = [
     {
         name: 'Kyiv',
         country: 'UA',
+        corruption: 36,
         taxRate: 19.5,
         weedFriendly: 40,
         alcoholFriendly: 95,
@@ -452,6 +467,7 @@ const CITIES = [
     {
         name: 'Warsaw',
         country: 'PL',
+        corruption: 54,
         taxRate: 28,
         weedFriendly: 45,
         alcoholFriendly: 100,
@@ -482,6 +498,7 @@ const CITIES = [
     {
         name: 'New York',
         country: 'US',
+        corruption: 69,
         taxRate: 35,
         weedFriendly: 90,
         alcoholFriendly: 100,
@@ -511,6 +528,7 @@ const CITIES = [
     {
         name: 'Los Angeles',
         country: 'US',
+        corruption: 69,
         taxRate: 33,
         weedFriendly: 100,
         alcoholFriendly: 100,
@@ -540,6 +558,7 @@ const CITIES = [
     {
         name: 'Toronto',
         country: 'CA',
+        corruption: 77,
         taxRate: 36,
         weedFriendly: 100,
         alcoholFriendly: 100,
@@ -570,6 +589,7 @@ const CITIES = [
     {
         name: 'Melbourne',
         country: 'AU',
+        corruption: 75,
         taxRate: 39,
         weedFriendly: 80,
         alcoholFriendly: 100,
@@ -600,6 +620,7 @@ const CITIES = [
     {
         name: 'Cairo',
         country: 'EG',
+        corruption: 30,
         taxRate: 23,
         weedFriendly: 10,
         alcoholFriendly: 40,
@@ -630,6 +651,7 @@ const CITIES = [
     {
         name: 'Cape Town',
         country: 'ZA',
+        corruption: 41,
         taxRate: 38,
         weedFriendly: 60,
         alcoholFriendly: 95,
@@ -660,6 +682,7 @@ const CITIES = [
     {
         name: 'Nairobi',
         country: 'KE',
+        corruption: 29,
         taxRate: 30,
         weedFriendly: 40,
         alcoholFriendly: 85,
@@ -690,6 +713,7 @@ const CITIES = [
     {
         name: 'Lagos',
         country: 'NG',
+        corruption: 25,
         taxRate: 20,
         weedFriendly: 30,
         alcoholFriendly: 60,
@@ -731,3 +755,4 @@ const WEATHER_ICONS = {
 // API Configuration
 const API_KEY = '9c0e09a72bb01808057ddd72e429269a';
 const API_BASE = 'https://api.openweathermap.org/data/2.5';
+

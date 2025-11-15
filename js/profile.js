@@ -14,21 +14,22 @@ class UserProfile {
             lgbtq: false,
 
             // Preferences
-            cannabisPreference: 'prefer',
             alcoholPreference: 'prefer',
+            cannabisPreference: 'neutral',
             idealTemp: 30,
 
             // Weights (must sum to 100)
             weights: {
-                tax: 27,
-                weather: 11,
-                costOfLiving: 15,
-                safety: 15,
+                tax: 25,
+                weather: 10,
+                costOfLiving: 14,
+                safety: 13,
                 healthcare: 8,
+                policeRisk: 6,
+                alcohol: 8,
                 cannabis: 2,
-                policeRisk: 7,
-                alcohol: 9,
-                timezone: 6
+                timezone: 6,
+                corruption: 8
             }
         };
     }
@@ -37,7 +38,15 @@ class UserProfile {
         const saved = localStorage.getItem('userProfile');
         if (saved) {
             try {
-                this.profile = { ...this.getDefaultProfile(), ...JSON.parse(saved) };
+                const savedProfile = JSON.parse(saved);
+                const defaults = this.getDefaultProfile();
+
+                // Merge weights separately to ensure new weights are added
+                if (savedProfile.weights) {
+                    savedProfile.weights = { ...defaults.weights, ...savedProfile.weights };
+                }
+
+                this.profile = { ...defaults, ...savedProfile };
             } catch (e) {
                 console.error('Error loading profile:', e);
             }
@@ -72,7 +81,14 @@ class UserProfile {
     importProfile(jsonString) {
         try {
             const imported = JSON.parse(jsonString);
-            this.profile = { ...this.getDefaultProfile(), ...imported };
+            const defaults = this.getDefaultProfile();
+
+            // Merge weights separately to ensure all weights are present
+            if (imported.weights) {
+                imported.weights = { ...defaults.weights, ...imported.weights };
+            }
+
+            this.profile = { ...defaults, ...imported };
             this.save();
             return true;
         } catch (e) {
