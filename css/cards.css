@@ -577,7 +577,6 @@
 }
 
 /* Corruption display styles */
-/* Corruption display styles */
 .corruption-display {
     text-align: center;
     padding: 1.5rem;
@@ -599,6 +598,14 @@
 .corruption-note {
     font-size: 0.85rem;
     color: var(--text-tertiary);
+    font-style: italic;
+}
+
+/* Breakdown note */
+.breakdown-note {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
     font-style: italic;
 }
 

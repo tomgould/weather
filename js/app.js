@@ -59,8 +59,8 @@ function initProfilePanel() {
         panel.classList.remove('open');
     });
 
-    // Weight sliders
-    const weightSliders = ['tax', 'weather', 'cost', 'safety', 'healthcare', 'police', 'alcohol', 'cannabis', 'timezone', 'corruption'];
+    // Weight sliders (corruption removed)
+    const weightSliders = ['tax', 'weather', 'cost', 'safety', 'healthcare', 'police', 'alcohol', 'cannabis', 'timezone'];
     weightSliders.forEach(name => {
         const slider = document.getElementById(`${name}Weight`);
         const valueDisplay = document.getElementById(`${name}WeightValue`);
@@ -127,7 +127,7 @@ function loadProfileToUI() {
     document.getElementById('cannabisPreference').value = profile.cannabisPreference;
     document.getElementById('idealTemp').value = profile.idealTemp;
 
-    // Load weights
+    // Load weights (corruption removed)
     Object.entries(profile.weights).forEach(([key, value]) => {
         const mappedKey = key === 'costOfLiving' ? 'cost' : key === 'policeRisk' ? 'police' : key;
         const slider = document.getElementById(`${mappedKey}Weight`);
@@ -159,8 +159,7 @@ function saveProfileFromUI() {
             policeRisk: parseInt(document.getElementById('policeWeight').value),
             alcohol: parseInt(document.getElementById('alcoholWeight').value),
             cannabis: parseInt(document.getElementById('cannabisWeight').value),
-            timezone: parseInt(document.getElementById('timezoneWeight').value),
-            corruption: parseInt(document.getElementById('corruptionWeight').value)
+            timezone: parseInt(document.getElementById('timezoneWeight').value)
         }
     };
 
@@ -168,7 +167,7 @@ function saveProfileFromUI() {
 }
 
 function updateWeightTotal() {
-    const total = ['tax', 'weather', 'cost', 'safety', 'healthcare', 'police', 'alcohol', 'cannabis', 'timezone', 'corruption']
+    const total = ['tax', 'weather', 'cost', 'safety', 'healthcare', 'police', 'alcohol', 'cannabis', 'timezone']
         .reduce((sum, name) => {
             const slider = document.getElementById(`${name}Weight`);
             return sum + parseInt(slider.value);

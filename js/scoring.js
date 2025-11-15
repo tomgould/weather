@@ -48,6 +48,19 @@ function getReligionMatch(cityReligion, userReligion) {
     return totalPercentage;
 }
 
+// Calculate kidnap risk penalty (significantly increased)
+function calculateKidnapPenalty(kidnapRisk) {
+    // Much more severe penalties to properly reflect danger
+    const penalties = {
+        1: 0,   // Low - no penalty
+        2: 3,   // Moderate - small penalty
+        3: 5,  // Medium - noticeable penalty
+        4: 15,  // High - major penalty
+        5: 25   // Extreme - severe penalty (pushes cities way down)
+    };
+    return penalties[kidnapRisk] || 0;
+}
+
 // Calculate demographic compatibility penalty
 function calculateDemographicPenalty(city, profile) {
     let penalty = 0;
@@ -170,9 +183,9 @@ function calculateTaxScore(taxRate) {
     return Math.max(0, 50 - ((taxRate - 30) * 2.5));
 }
 
-// Calculate corruption score (CPI: 0-100, higher is better)
+// Calculate corruption score (CPI: 0-100, higher is better) - always contributes 10%
 function calculateCorruptionScore(cpiScore) {
-    return cpiScore || 50; // Default to 50 if undefined
+    return cpiScore || 50; // Direct use of CPI score
 }
 
 // Calculate timezone score
@@ -278,7 +291,7 @@ function getSectionOrder(weights) {
         { name: 'breakdown', weight: 100 }, // Always show breakdown first
         { name: 'weatherGroup', weight: weights.weather }, // Weather + Forecast together
         { name: 'lifestyle', weight: Math.max(weights.cannabis, weights.alcohol) },
-        { name: 'corruption', weight: weights.corruption },
+        { name: 'corruption', weight: 50 }, // Fixed mid-priority (not weighted by user)
         { name: 'safety', weight: weights.safety },
         { name: 'healthcare', weight: weights.healthcare },
         { name: 'cost', weight: weights.costOfLiving },
@@ -293,7 +306,7 @@ function getSectionOrder(weights) {
 function calculateHappinessScore(city, profile, allCities) {
     const weights = profile.weights;
 
-    // Ensure all weights exist with defaults
+    // Ensure all weights exist with defaults (corruption removed)
     const safeWeights = {
         tax: weights.tax || 0,
         weather: weights.weather || 0,
@@ -303,8 +316,7 @@ function calculateHappinessScore(city, profile, allCities) {
         cannabis: weights.cannabis || 0,
         policeRisk: weights.policeRisk || 0,
         alcohol: weights.alcohol || 0,
-        timezone: weights.timezone || 0,
-        corruption: weights.corruption || 0
+        timezone: weights.timezone || 0
     };
 
     // Calculate forecast-based temperature score
@@ -338,7 +350,7 @@ function calculateHappinessScore(city, profile, allCities) {
     city.alcoholScore = alcoholScore;
     city.timezoneOffsetHours = timezoneOffsetHours;
 
-    // Calculate weighted score (normalized to 100)
+    // Calculate weighted score (user-weighted factors = 90% of score)
     const totalWeight = Object.values(safeWeights).reduce((sum, w) => sum + w, 0);
 
     // Prevent division by zero
@@ -346,7 +358,7 @@ function calculateHappinessScore(city, profile, allCities) {
         return 50; // Default neutral score
     }
 
-    const baseScore = (
+    const weightedScore = (
         (taxScore * safeWeights.tax) +
         (tempScore * safeWeights.weather) +
         (costScore * safeWeights.costOfLiving) +
@@ -355,13 +367,18 @@ function calculateHappinessScore(city, profile, allCities) {
         (cannabisScore * safeWeights.cannabis) +
         (policeScore * safeWeights.policeRisk) +
         (alcoholScore * safeWeights.alcohol) +
-        (timezoneScore * safeWeights.timezone) +
-        (corruptionScore * safeWeights.corruption)
-    ) / totalWeight * 100;
+        (timezoneScore * safeWeights.timezone)
+    ) / totalWeight;
+
+    // Combine: 90% weighted factors + 10% corruption (always)
+    const baseScore = (weightedScore * 0.9) + (corruptionScore * 0.1);
 
     // Apply demographic penalty
     const demographicPenalty = calculateDemographicPenalty(city, profile);
 
-    return Math.round(Math.max(0, baseScore - demographicPenalty));
+    // Apply kidnap risk penalty (significantly increased impact)
+    const kidnapPenalty = calculateKidnapPenalty(city.kidnapRisk);
+
+    return Math.round(Math.max(0, baseScore - demographicPenalty - kidnapPenalty));
 }
 

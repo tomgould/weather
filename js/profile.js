@@ -18,18 +18,17 @@ class UserProfile {
             cannabisPreference: 'neutral',
             idealTemp: 30,
 
-            // Weights (must sum to 100)
+            // Weights (must sum to 100) - corruption removed, always factors in automatically
             weights: {
-                tax: 25,
-                weather: 10,
-                costOfLiving: 14,
-                safety: 13,
+                tax: 27,
+                weather: 11,
+                costOfLiving: 15,
+                safety: 14,
                 healthcare: 8,
-                policeRisk: 6,
-                alcohol: 8,
+                policeRisk: 7,
+                alcohol: 9,
                 cannabis: 2,
-                timezone: 6,
-                corruption: 8
+                timezone: 7
             }
         };
     }
@@ -43,6 +42,8 @@ class UserProfile {
 
                 // Merge weights separately to ensure new weights are added
                 if (savedProfile.weights) {
+                    // Remove corruption if it exists in old profiles
+                    delete savedProfile.weights.corruption;
                     savedProfile.weights = { ...defaults.weights, ...savedProfile.weights };
                 }
 
@@ -85,6 +86,8 @@ class UserProfile {
 
             // Merge weights separately to ensure all weights are present
             if (imported.weights) {
+                // Remove corruption if it exists
+                delete imported.weights.corruption;
                 imported.weights = { ...defaults.weights, ...imported.weights };
             }
 

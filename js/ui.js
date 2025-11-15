@@ -51,6 +51,18 @@ function getScoreEmoji(score, allScores) {
     return '😭';
 }
 
+// Get kidnap risk display
+function getKidnapRiskDisplay(risk) {
+    const displays = {
+        1: { text: 'Low', color: '#22c55e', icon: '✅' },
+        2: { text: 'Moderate', color: '#84cc16', icon: '🟢' },
+        3: { text: 'Medium', color: '#eab308', icon: '⚠️' },
+        4: { text: 'High', color: '#f97316', icon: '🚨' },
+        5: { text: 'Extreme', color: '#ef4444', icon: '🔴' }
+    };
+    return displays[risk] || displays[3];
+}
+
 // Get lifestyle indicator display
 function getLifestyleDisplay(score, type) {
     let icon, text, color;
@@ -150,6 +162,8 @@ function createCityCard(data, rank, allScores) {
     const corruptionDisplayScore = 100 - data.corruption;
     const corruptionColor = getCorruptionColor(corruptionDisplayScore);
 
+    const kidnap = getKidnapRiskDisplay(data.kidnapRisk);
+
     const scoreEmoji = getScoreEmoji(data.happinessScore, allScores);
     const weedDisplay = getLifestyleDisplay(data.weedFriendly, 'cannabis');
     const alcoholDisplay = getLifestyleDisplay(data.alcoholFriendly, 'alcohol');
@@ -242,6 +256,7 @@ function createCityCard(data, rank, allScores) {
         breakdown: `
             <div class="score-breakdown">
                 <h3 class="breakdown-title">Score Breakdown</h3>
+                <div class="breakdown-note">Corruption (10%) always applies. Kidnap risk penalty: ${kidnap.text}</div>
                 <div class="breakdown-grid">
                     <div class="breakdown-item">
                         <div class="breakdown-label">
@@ -306,19 +321,12 @@ function createCityCard(data, rank, allScores) {
                         </div>
                         <div class="breakdown-score" style="color: ${getScoreColor(data.timezoneScore)}">${Math.round(data.timezoneScore)}</div>
                     </div>
-                    <div class="breakdown-item">
-                        <div class="breakdown-label">
-                            <span class="breakdown-icon">⚖️</span>
-                            <span>Corruption (${profile.weights.corruption}%)</span>
-                        </div>
-                        <div class="breakdown-score" style="color: ${getScoreColor(data.corruptionScore)}">${Math.round(data.corruptionScore)}</div>
-                    </div>
                 </div>
             </div>
         `,
         corruption: `
             <div class="demographics-section">
-                <h3 class="demographics-title">⚖️ Corruption Level</h3>
+                <h3 class="demographics-title">⚖️ Corruption Level (Always 10% of Score)</h3>
                 <div class="corruption-display">
                     <div class="corruption-score-large" style="color: ${corruptionColor}">
                         ${corruptionDisplayScore}/100
@@ -357,6 +365,13 @@ function createCityCard(data, rank, allScores) {
                             <span>Cultural Safety</span>
                         </div>
                         <div class="safety-score" style="color: ${getScoreColor(data.safety.cultural)}">${data.safety.cultural}</div>
+                    </div>
+                    <div class="safety-item">
+                        <div class="safety-label">
+                            <span class="safety-icon">${kidnap.icon}</span>
+                            <span>Kidnap/Ransom Risk</span>
+                        </div>
+                        <div class="safety-score" style="color: ${kidnap.color}">${kidnap.text}</div>
                     </div>
                 </div>
             </div>
@@ -448,3 +463,4 @@ function createCityCard(data, rank, allScores) {
         </div>
     `;
 }
+
